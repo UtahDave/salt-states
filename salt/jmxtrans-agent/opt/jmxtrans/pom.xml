@@ -1,0 +1,34 @@
+<project       xmlns="http://maven.apache.org/POM/4.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
+  <groupId>org.jmxtrans.agent</groupId>
+  <artifactId>jmxtrans-agent-deploy</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!-- Build Settings -->
+  <build>
+    <defaultGoal>dependency:copy</defaultGoal>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <configuration>
+          <artifactItems>
+            <artifactItem>
+              <groupId>org.jmxtrans.agent</groupId>
+              <artifactId>jmxtrans-agent</artifactId>
+              <type>jar</type>
+              <version>1.0.6</version>
+              <outputDirectory>/opt/jmxtrans/lib</outputDirectory>
+            </artifactItem>
+            </artifactItems>
+          <stripVersion>true</stripVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

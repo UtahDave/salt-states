@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "check-process-sensu-server": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'bin/sensu-server' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+{#
+    "check-sensu-server-aggregate": {
+      "command"     : "/etc/sensu/plugins/sensu/check-aggregate.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+-#}
+  }
+}

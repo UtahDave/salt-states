@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-ceilometer-api": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p ceilometer-api -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-ceilometer-api": {
+      "command"     : "/etc/sensu/plugins/openstack/ceilometer/check_ceilometer-api.sh",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-neutron-server": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p neutron-server -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-neutron-server-alive": {
+      "command"     : "/etc/sensu/plugins/openstack/neutron/check_neutron-api.py",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

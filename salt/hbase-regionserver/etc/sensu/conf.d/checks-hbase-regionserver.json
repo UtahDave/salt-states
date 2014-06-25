@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-http-hbase-regionserver": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '60030' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-hbase-regionserver": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'Dhbase.log.file=hbase-.*-(regionserver|REGIONSERVER)' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

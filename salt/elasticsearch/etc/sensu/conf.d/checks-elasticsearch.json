@@ -1,0 +1,57 @@
+{
+  "checks": {
+    "check-elasticsearch-cluster": {
+      "command"     : "/etc/sensu/plugins/elasticsearch/check-es-cluster-status.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-elasticsearch-file-descriptors": {
+      "command"     : "/etc/sensu/plugins/elasticsearch/check-es-file-descriptors.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-elasticsearch-heap": {
+      "command"     : "/etc/sensu/plugins/elasticsearch/check-es-heap.rb -w 201326592 -c 268435456",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-http-elasticsearch": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '9200' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-elasticsearch": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'org.elasticsearch.bootstrap.Elastic(S|s)earch' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-elasticsearch-cluster": {
+      "command"     : "/etc/sensu/plugins/elasticsearch/es-cluster-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+{#
+    "metric-elasticsearch-node": {
+      "command"     : "/etc/sensu/plugins/elasticsearch/es-node-graphite.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-elasticsearch-node": {
+      "command"     : "/etc/sensu/plugins/elasticsearch/es-node-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+-#}
+  }
+}

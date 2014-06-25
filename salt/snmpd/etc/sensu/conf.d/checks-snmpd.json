@@ -1,0 +1,37 @@
+{
+  "checks": {
+    "check-process-snmpd": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p snmpd -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-snmp": {
+      "command"     : "/etc/sensu/plugins/snmp/check-snmp.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-snmp": {
+      "command"     : "/etc/sensu/plugins/snmp/snmp-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-snmp-bulk": {
+      "command"     : "/etc/sensu/plugins/snmp/snmp-bulk-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-snmp-interface": {
+      "command"     : "/etc/sensu/plugins/snmp/snmp-if-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

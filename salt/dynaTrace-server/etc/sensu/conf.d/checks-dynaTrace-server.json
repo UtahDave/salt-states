@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-dynaTrace-server": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p dynaTrace-server -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

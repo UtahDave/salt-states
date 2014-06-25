@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-trove-taskmanager": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p trove-taskmanager -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "checks": {
+{#
+    "check-smart": {
+      "command"     : "/etc/sensu/plugins/smart/check-smart.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-system-smart": {
+      "command"     : "/etc/sensu/plugins/system/check-smart.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+-#}
+  }
+}

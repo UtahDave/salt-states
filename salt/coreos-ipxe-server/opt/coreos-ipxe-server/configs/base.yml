@@ -1,0 +1,21 @@
+{% set files = salt['cp.list_master']() -%}
+{% set users = [] -%}
+{% do  users.append('krichardson') -%}
+#cloud-config
+
+coreos:
+  units:
+    - name:          etcd.service
+      command:       start
+    - name:          fleet.service
+      command:       start
+  update:
+    reboot-strategy: best-effort
+
+ssh_authorized_keys:
+{% for user in users -%}
+{% set file = 'openssh-server/root/.ssh/id_rsa.pub.' + user -%}
+{% if  file in files -%}
+  - {{ salt['cp.get_file_str']('salt://' + file) }}
+{% endif -%}
+{% endfor -%}

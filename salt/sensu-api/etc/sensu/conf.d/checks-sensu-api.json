@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "check-process-sensu-api": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'bin/sensu-api' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-sensu-api-aggregate": {
+      "command"     : "/etc/sensu/plugins/sensu/aggregate-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

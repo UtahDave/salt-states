@@ -1,0 +1,14 @@
+{% set minions = salt['roles.list_minions']('influxdb') -%}
+{% if  minions['influxdb'] -%}
+{
+  "handlers"       : {
+    "influxdb"     : {
+      "host"       :  "{{ minions['influxdb'][0] }}",
+      "port"       :  "8086",
+      "user"       :  "stats",
+      "password"   :  "stats",
+      "database"   :  "stats"
+    }
+  }
+}
+{% endif -%}

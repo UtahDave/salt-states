@@ -1,0 +1,15 @@
+#if      $machinetype == 'kvm'
+#set     $disk         = 'vda'
+#else if $machinetype == 'xen'
+#set     $disk         = 'xvda'
+#else
+#set     $disk         = 'sda'
+#end if
+
+bootloader --location=mbr --driveorder=$disk
+clearpart  --all          --initlabel
+part        /boot         --size=128    --ondisk=$disk  --fstype ext3
+part         swap         --recommended --ondisk=$disk
+part         pv.01        --size=1024   --ondisk=$disk  --grow
+volgroup     VolGroup00   --pesize=32768  pv.01
+logvol      /             --size=1024   --fstype ext3 --name=LogVol00 --vgname=VolGroup00 --grow

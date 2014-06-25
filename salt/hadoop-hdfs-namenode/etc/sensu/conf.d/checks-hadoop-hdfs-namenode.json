@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-http-hadoop-hdfs-namenode": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '50070' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-hadoop-hdfs-namenode": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'org.apache.hadoop.hdfs.server.namenode.NameNode' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

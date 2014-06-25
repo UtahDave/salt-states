@@ -1,0 +1,305 @@
+{% set environment = salt['grains.get']('environment') -%}
+{
+  "title": "grafana",
+  "services": {
+    "filter": {
+      "list": [],
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      }
+    }
+  },
+  "rows": [
+    {% for minion, items in salt['mine.get']('environment:' + environment, 'grains.item', expr_form='grain')|dictsort -%}
+    {% set host = minion.split('.')[0] -%}
+    {
+      "title": "{{ host }}",
+      "height": "237px",
+      "editable": true,
+      "collapse": false,
+      "collapsable": true,
+      "panels": [
+        {
+          "error": false,
+          "span": 3,
+          "editable": true,
+          "type": "text",
+          "loadingEditor": false,
+          "mode": "markdown",
+          "content": "[...more system metrics](/#/dashboard/file/{{ host }}.json)\n\n```\nvirtual: {{ items.virtual }}\nkernel:  {{ items.kernelrelease }}\nos:      {{ items.os }}\nrelease: {{ items.osrelease }}\narch:    {{ items.cpuarch }}\ncpus:    {{ items.num_cpus }}\nmemory:  {{ (items.mem_total/1024)|round(2) }}\nsalt:    {{ items.saltversion }}\nenv:     {{ items.environment }}\n```",
+          "style": {},
+          "title": "{{ host }}"
+        },
+        {
+          "span": 3,
+          "editable": true,
+          "type": "graphite",
+          "loadingEditor": false,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": 0,
+            "threshold1": null,
+            "threshold2": null,
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": true
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "target": "{{ host }}.system.disk-*.*.*"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "{{ host }} disk"
+        },
+        {% set load_w1 = (items.num_cpus * 2) + 1 -%}
+        {% set load_w2 = load_w1 + 5 -%}
+        {% set load_w3 = load_w2 + 5 -%}
+        {% set load_c1 = load_w1 * 4 -%}
+        {% set load_c2 = load_c1 + 5 -%}
+        {% set load_c3 = load_c2 + 5 -%}
+        {
+          "span": 3,
+          "editable": true,
+          "type": "graphite",
+          "loadingEditor": false,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": 0,
+            "threshold1": "{{ load_w3 }}",
+            "threshold2": "{{ load_c3 }}",
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": true
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": false,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "target": "{{ host }}.system.load.load.*"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "{{ host }} load"
+        },
+        {% set memory   = items.mem_total * 1024 * 1024 -%}
+        {% set memory_w = memory * 0.90 -%}
+        {% set memory_c = memory * 0.95 -%}
+        {
+          "span": 3,
+          "editable": true,
+          "type": "graphite",
+          "loadingEditor": false,
+          "datasource": null,
+          "renderer": "flot",
+          "x-axis": true,
+          "y-axis": true,
+          "scale": 1,
+          "y_formats": [
+            "short",
+            "short"
+          ],
+          "grid": {
+            "max": null,
+            "min": 0,
+            "threshold1": "{{ memory_w }}",
+            "threshold2": "{{ memory_c }}",
+            "threshold1Color": "rgba(216, 200, 27, 0.27)",
+            "threshold2Color": "rgba(234, 112, 112, 0.22)"
+          },
+          "annotate": {
+            "enable": true
+          },
+          "resolution": 100,
+          "lines": true,
+          "fill": 1,
+          "linewidth": 2,
+          "points": false,
+          "pointradius": 5,
+          "bars": false,
+          "stack": true,
+          "legend": {
+            "show": false,
+            "values": false,
+            "min": false,
+            "max": false,
+            "current": false,
+            "total": false,
+            "avg": false
+          },
+          "percentage": false,
+          "zerofill": true,
+          "nullPointMode": "connected",
+          "steppedLine": false,
+          "tooltip": {
+            "value_type": "cumulative",
+            "query_as_alias": true
+          },
+          "targets": [
+            {
+              "target": "{{ host }}.system.memory.*"
+            }
+          ],
+          "aliasColors": {},
+          "aliasYAxis": {},
+          "title": "{{ host }} memory"
+        }
+      ],
+      "notice": false
+    }{% if not loop.last -%},{% endif -%}
+    {% endfor -%}
+  ],
+  "editable": true,
+  "failover": false,
+  "panel_hints": true,
+  "style": "dark",
+  "pulldowns": [
+    {
+      "type": "filtering",
+      "collapse": false,
+      "notice": false,
+      "enable": false
+    },
+    {
+      "type": "annotations",
+      "enable": true,
+      "annotations": [
+        {
+          "name": "deploy",
+          "type": "graphite events",
+          "showLine": true,
+          "iconColor": "#C0C6BE",
+          "lineColor": "rgba(255, 96, 96, 0.592157)",
+          "iconSize": 13,
+          "enable": true,
+          "tags": "deploy"
+        }
+      ]
+    }
+  ],
+  "nav": [
+    {
+      "type": "timepicker",
+      "collapse": false,
+      "notice": false,
+      "enable": true,
+      "status": "Stable",
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ],
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "now": true
+    }
+  ],
+  "loader": {
+    "save_gist": false,
+    "save_elasticsearch": true,
+    "save_local": true,
+    "save_default": true,
+    "save_temp": true,
+    "save_temp_ttl_enable": true,
+    "save_temp_ttl": "30d",
+    "load_gist": false,
+    "load_elasticsearch": true,
+    "load_elasticsearch_size": 20,
+    "load_local": false,
+    "hide": false
+  },
+  "refresh": "30s",
+  "tags": [
+    "deploy"
+  ],
+  "timezone": "browser"
+}

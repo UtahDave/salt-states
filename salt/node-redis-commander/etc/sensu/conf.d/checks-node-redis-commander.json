@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-http-node-redis-commander": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '8081' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

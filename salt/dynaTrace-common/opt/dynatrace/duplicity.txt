@@ -1,0 +1,9 @@
+${DT_HOME}/*.ini
+${DT_HOME}/server/conf/dtlicense.key
+${DT_HOME}/server/conf/dtstorage.dat
+${DT_HOME}/server/conf/profiles
+${DT_HOME}/server/conf/sensors
+${DT_HOME}/server/conf/server.config.xml
+${DT_HOME}/server/conf/sessions
+${DT_HOME}/server/conf/user.permissions.xml
+${DT_HOME}/server/dashboards

@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-http-sensu-dashboard": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '8080' -p '/' -U 'admin' -a 'secret'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-sensu-dashboard": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'bin/sensu-dashboard' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

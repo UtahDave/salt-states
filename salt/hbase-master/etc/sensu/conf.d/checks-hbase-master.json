@@ -1,0 +1,31 @@
+{% set minions = salt['roles.list_minions']('hbase-regionserver') -%}
+{
+  "checks": {
+    "check-http-hbase-master": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '60010' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-hbase-master": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'Dhbase.log.file=hbase-.*-(master|MASTER)' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    {% if minions['hbase-regionserver'] -%}
+    "check-hbase-master-regions": {
+      "command"     : "/etc/sensu/plugins/hbase/check-hbase-regions.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    {% endif -%}
+    "check-hbase-master-status": {
+      "command"     : "/etc/sensu/plugins/hbase/check-hbase-status.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

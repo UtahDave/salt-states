@@ -1,0 +1,78 @@
+{
+  "checks": {
+    "check-process-postgresql": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p postgresql -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-postgresql-alive": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-alive.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-postgresql-replication": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-replication.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-postgresql": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-graphite.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-postgresql-background-writer": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-statsbgwriter-metric.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-postgresql-connections": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-connections-metric.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-postgresql-database": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-statsdb-metric.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-postgresql-database-size": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-dbsize-metric.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-postgresql-io": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-statsio-metric.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-postgresql-locks": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-locks-metric.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-postgresql-tables": {
+      "command"     : "/etc/sensu/plugins/postgres/postgres-statstable-metric.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

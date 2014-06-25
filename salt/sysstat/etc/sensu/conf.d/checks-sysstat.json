@@ -1,0 +1,13 @@
+{
+  "checks": {
+{#
+    "metric-system-iostat": {
+      "command"     : "/etc/sensu/plugins/system/iostat-extended-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+-#}
+  }
+}

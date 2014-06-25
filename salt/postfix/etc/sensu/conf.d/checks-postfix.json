@@ -1,0 +1,24 @@
+{
+  "checks": {
+    "check-process-postfix-qmgr": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p   'qmgr -l -t (fifo|unix) -u' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-postfix-mailq": {
+      "command"     : "/etc/sensu/plugins/postfix/check-mailq.rb -w 5 -c 10",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+{#
+    "check-process-postfix-pickup": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'pickup -l -t (fifo|unix) -u' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+-#}
+  }
+}

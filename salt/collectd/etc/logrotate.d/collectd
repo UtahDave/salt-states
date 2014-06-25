@@ -1,0 +1,11 @@
+/var/log/collectd.log {
+    compress
+    copytruncate
+    daily
+    missingok
+    notifempty
+    postrotate
+        /bin/kill -HUP $( cat /var/run/collectd{,mon}.pid 2>/dev/null ) 2>/dev/null || true
+    endscript
+    rotate 7
+}

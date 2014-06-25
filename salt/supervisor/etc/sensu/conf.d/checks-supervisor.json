@@ -1,0 +1,18 @@
+{
+  "checks": {
+    "check-process-supervisor": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p supervisor -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+{#
+    "check-supervisor": {
+      "command"     : "/etc/sensu/plugins/supervisor/check-supervisor.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+-#}
+  }
+}

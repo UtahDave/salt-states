@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-nova-api-os-compute": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p nova-api-os-compute -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

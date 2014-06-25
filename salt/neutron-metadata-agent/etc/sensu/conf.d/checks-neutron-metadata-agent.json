@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-neutron-metadata-agent": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p neutron-metadata-agent -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-neutron-metadata-agent": {
+      "command"     : "/etc/sensu/plugins/openstack/neutron/neutron-agent-status.py",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "checks": {
+    "check-http-graphite-web": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '80' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+{#
+    "check-graphite-web-replication": {
+      "command"     : "/etc/sensu/plugins/graphite/check-replication.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-graphite-web-data": {
+      "command"     : "/etc/sensu/plugins/graphite/check-data.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-graphite-web": {
+      "command"     : "/etc/sensu/plugins/graphite/graphite.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+-#}
+  }
+}

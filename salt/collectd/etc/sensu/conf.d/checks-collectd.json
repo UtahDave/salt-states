@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-collectd": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '/usr/sbin/collectd' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

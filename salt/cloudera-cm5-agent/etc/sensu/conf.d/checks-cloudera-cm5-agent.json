@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-cloudera-cm5-agent": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'cmf/agent/src/cmf/agent.py' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

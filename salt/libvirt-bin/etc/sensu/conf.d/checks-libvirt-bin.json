@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-libvirt-bin": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p libvirt-bin -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

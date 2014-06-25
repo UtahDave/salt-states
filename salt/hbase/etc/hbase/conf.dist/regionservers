@@ -1,0 +1,15 @@
+{% set roles = [] -%}
+{% do  roles.append('hbase-master') -%}
+{% do  roles.append('hbase-regionserver') -%}
+{% set minions = salt['roles.list_minions'](roles) -%}
+{% if            minions['hbase-regionserver'] -%}
+{% for minion in minions['hbase-regionserver'] -%}
+{{ minion }}
+{% endfor -%}
+{% elif          minions['hbase-master'] -%}
+{% for minion in minions['hbase-master'] -%}
+{{ minion }}
+{% endfor -%}
+{% else -%}
+localhost
+{% endif -%}

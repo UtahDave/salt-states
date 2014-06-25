@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-newrelic-daemon": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '/usr/bin/newrelic-daemon' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

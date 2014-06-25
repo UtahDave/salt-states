@@ -1,0 +1,1397 @@
+{% set host    = salt['config.get']('host') -%}
+{% set minions = salt['roles.list_minions']('graphite-carbon') -%}
+<jmxtrans-agent>
+  <queries>
+
+    <query objectName="java.lang:type=ClassLoading"
+            attribute="LoadedClassCount"
+          resultAlias="java.lang.ClassLoading.LoadedClassCount"/>
+
+    <query objectName="java.lang:type=ClassLoading"
+            attribute="TotalLoadedClassCount"
+          resultAlias="java.lang.ClassLoading.TotalLoadedClassCount"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="committed"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.committed"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="max"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.max"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="used"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.used"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="committed"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.committed"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="max"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.max"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="used"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.CodeCache.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.CodeCache.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.CodeCache.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.CodeCache.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=OperatingSystem"
+            attribute="SystemLoadAverage"
+          resultAlias="java.lang.OperatingSystem.SystemLoadAverage"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="CurrentThreadCpuTime"
+          resultAlias="java.lang.Threading.CurrentThreadCpuTime"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="PeakThreadCount"
+          resultAlias="java.lang.Threading.PeakThreadCount"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="ThreadCount"
+          resultAlias="java.lang.Threading.ThreadCount"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="addColumnAvgTime"
+          resultAlias="RPCStatistics-60000.addColumnAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="addColumnMaxTime"
+          resultAlias="RPCStatistics-60000.addColumnMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="addColumnMinTime"
+          resultAlias="RPCStatistics-60000.addColumnMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="addColumnNumOps"
+          resultAlias="RPCStatistics-60000.addColumnNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="appendAvgTime"
+          resultAlias="RPCStatistics-60000.appendAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="appendMaxTime"
+          resultAlias="RPCStatistics-60000.appendMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="appendMinTime"
+          resultAlias="RPCStatistics-60000.appendMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="appendNumOps"
+          resultAlias="RPCStatistics-60000.appendNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="assignAvgTime"
+          resultAlias="RPCStatistics-60000.assignAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="assignMaxTime"
+          resultAlias="RPCStatistics-60000.assignMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="assignMinTime"
+          resultAlias="RPCStatistics-60000.assignMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="assignNumOps"
+          resultAlias="RPCStatistics-60000.assignNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceAvgTime"
+          resultAlias="RPCStatistics-60000.balanceAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceMaxTime"
+          resultAlias="RPCStatistics-60000.balanceMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceMinTime"
+          resultAlias="RPCStatistics-60000.balanceMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceNumOps"
+          resultAlias="RPCStatistics-60000.balanceNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceSwitchAvgTime"
+          resultAlias="RPCStatistics-60000.balanceSwitchAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceSwitchMaxTime"
+          resultAlias="RPCStatistics-60000.balanceSwitchMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceSwitchMinTime"
+          resultAlias="RPCStatistics-60000.balanceSwitchMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="balanceSwitchNumOps"
+          resultAlias="RPCStatistics-60000.balanceSwitchNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="bulkLoadHFilesAvgTime"
+          resultAlias="RPCStatistics-60000.bulkLoadHFilesAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="bulkLoadHFilesMaxTime"
+          resultAlias="RPCStatistics-60000.bulkLoadHFilesMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="bulkLoadHFilesMinTime"
+          resultAlias="RPCStatistics-60000.bulkLoadHFilesMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="bulkLoadHFilesNumOps"
+          resultAlias="RPCStatistics-60000.bulkLoadHFilesNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="callQueueLen"
+          resultAlias="RPCStatistics-60000.callQueueLen"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndDeleteAvgTime"
+          resultAlias="RPCStatistics-60000.checkAndDeleteAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndDeleteMaxTime"
+          resultAlias="RPCStatistics-60000.checkAndDeleteMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndDeleteMinTime"
+          resultAlias="RPCStatistics-60000.checkAndDeleteMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndDeleteNumOps"
+          resultAlias="RPCStatistics-60000.checkAndDeleteNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndPutAvgTime"
+          resultAlias="RPCStatistics-60000.checkAndPutAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndPutMaxTime"
+          resultAlias="RPCStatistics-60000.checkAndPutMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndPutMinTime"
+          resultAlias="RPCStatistics-60000.checkAndPutMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="checkAndPutNumOps"
+          resultAlias="RPCStatistics-60000.checkAndPutNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeAvgTime"
+          resultAlias="RPCStatistics-60000.closeAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeMaxTime"
+          resultAlias="RPCStatistics-60000.closeMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeMinTime"
+          resultAlias="RPCStatistics-60000.closeMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeNumOps"
+          resultAlias="RPCStatistics-60000.closeNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeRegionAvgTime"
+          resultAlias="RPCStatistics-60000.closeRegionAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeRegionMaxTime"
+          resultAlias="RPCStatistics-60000.closeRegionMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeRegionMinTime"
+          resultAlias="RPCStatistics-60000.closeRegionMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="closeRegionNumOps"
+          resultAlias="RPCStatistics-60000.closeRegionNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="compactRegionAvgTime"
+          resultAlias="RPCStatistics-60000.compactRegionAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="compactRegionMaxTime"
+          resultAlias="RPCStatistics-60000.compactRegionMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="compactRegionMinTime"
+          resultAlias="RPCStatistics-60000.compactRegionMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="compactRegionNumOps"
+          resultAlias="RPCStatistics-60000.compactRegionNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="createTableAvgTime"
+          resultAlias="RPCStatistics-60000.createTableAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="createTableMaxTime"
+          resultAlias="RPCStatistics-60000.createTableMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="createTableMinTime"
+          resultAlias="RPCStatistics-60000.createTableMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="createTableNumOps"
+          resultAlias="RPCStatistics-60000.createTableNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteAvgTime"
+          resultAlias="RPCStatistics-60000.deleteAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteColumnAvgTime"
+          resultAlias="RPCStatistics-60000.deleteColumnAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteColumnMaxTime"
+          resultAlias="RPCStatistics-60000.deleteColumnMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteColumnMinTime"
+          resultAlias="RPCStatistics-60000.deleteColumnMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteColumnNumOps"
+          resultAlias="RPCStatistics-60000.deleteColumnNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteMaxTime"
+          resultAlias="RPCStatistics-60000.deleteMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteMinTime"
+          resultAlias="RPCStatistics-60000.deleteMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteNumOps"
+          resultAlias="RPCStatistics-60000.deleteNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteSnapshotAvgTime"
+          resultAlias="RPCStatistics-60000.deleteSnapshotAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteSnapshotMaxTime"
+          resultAlias="RPCStatistics-60000.deleteSnapshotMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteSnapshotMinTime"
+          resultAlias="RPCStatistics-60000.deleteSnapshotMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteSnapshotNumOps"
+          resultAlias="RPCStatistics-60000.deleteSnapshotNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteTableAvgTime"
+          resultAlias="RPCStatistics-60000.deleteTableAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteTableMaxTime"
+          resultAlias="RPCStatistics-60000.deleteTableMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteTableMinTime"
+          resultAlias="RPCStatistics-60000.deleteTableMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="deleteTableNumOps"
+          resultAlias="RPCStatistics-60000.deleteTableNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="disableTableAvgTime"
+          resultAlias="RPCStatistics-60000.disableTableAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="disableTableMaxTime"
+          resultAlias="RPCStatistics-60000.disableTableMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="disableTableMinTime"
+          resultAlias="RPCStatistics-60000.disableTableMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="disableTableNumOps"
+          resultAlias="RPCStatistics-60000.disableTableNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="enableTableAvgTime"
+          resultAlias="RPCStatistics-60000.enableTableAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="enableTableMaxTime"
+          resultAlias="RPCStatistics-60000.enableTableMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="enableTableMinTime"
+          resultAlias="RPCStatistics-60000.enableTableMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="enableTableNumOps"
+          resultAlias="RPCStatistics-60000.enableTableNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="execCoprocessorAvgTime"
+          resultAlias="RPCStatistics-60000.execCoprocessorAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="execCoprocessorMaxTime"
+          resultAlias="RPCStatistics-60000.execCoprocessorMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="execCoprocessorMinTime"
+          resultAlias="RPCStatistics-60000.execCoprocessorMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="execCoprocessorNumOps"
+          resultAlias="RPCStatistics-60000.execCoprocessorNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="existsAvgTime"
+          resultAlias="RPCStatistics-60000.existsAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="existsMaxTime"
+          resultAlias="RPCStatistics-60000.existsMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="existsMinTime"
+          resultAlias="RPCStatistics-60000.existsMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="existsNumOps"
+          resultAlias="RPCStatistics-60000.existsNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="flushRegionAvgTime"
+          resultAlias="RPCStatistics-60000.flushRegionAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="flushRegionMaxTime"
+          resultAlias="RPCStatistics-60000.flushRegionMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="flushRegionMinTime"
+          resultAlias="RPCStatistics-60000.flushRegionMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="flushRegionNumOps"
+          resultAlias="RPCStatistics-60000.flushRegionNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getAlterStatusAvgTime"
+          resultAlias="RPCStatistics-60000.getAlterStatusAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getAlterStatusMaxTime"
+          resultAlias="RPCStatistics-60000.getAlterStatusMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getAlterStatusMinTime"
+          resultAlias="RPCStatistics-60000.getAlterStatusMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getAlterStatusNumOps"
+          resultAlias="RPCStatistics-60000.getAlterStatusNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getAvgTime"
+          resultAlias="RPCStatistics-60000.getAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getBlockCacheColumnFamilySummariesAvgTime"
+          resultAlias="RPCStatistics-60000.getBlockCacheColumnFamilySummariesAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getBlockCacheColumnFamilySummariesMaxTime"
+          resultAlias="RPCStatistics-60000.getBlockCacheColumnFamilySummariesMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getBlockCacheColumnFamilySummariesMinTime"
+          resultAlias="RPCStatistics-60000.getBlockCacheColumnFamilySummariesMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getBlockCacheColumnFamilySummariesNumOps"
+          resultAlias="RPCStatistics-60000.getBlockCacheColumnFamilySummariesNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClosestRowBeforeAvgTime"
+          resultAlias="RPCStatistics-60000.getClosestRowBeforeAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClosestRowBeforeMaxTime"
+          resultAlias="RPCStatistics-60000.getClosestRowBeforeMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClosestRowBeforeMinTime"
+          resultAlias="RPCStatistics-60000.getClosestRowBeforeMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClosestRowBeforeNumOps"
+          resultAlias="RPCStatistics-60000.getClosestRowBeforeNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClusterStatusAvgTime"
+          resultAlias="RPCStatistics-60000.getClusterStatusAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClusterStatusMaxTime"
+          resultAlias="RPCStatistics-60000.getClusterStatusMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClusterStatusMinTime"
+          resultAlias="RPCStatistics-60000.getClusterStatusMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getClusterStatusNumOps"
+          resultAlias="RPCStatistics-60000.getClusterStatusNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompactionStateAvgTime"
+          resultAlias="RPCStatistics-60000.getCompactionStateAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompactionStateMaxTime"
+          resultAlias="RPCStatistics-60000.getCompactionStateMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompactionStateMinTime"
+          resultAlias="RPCStatistics-60000.getCompactionStateMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompactionStateNumOps"
+          resultAlias="RPCStatistics-60000.getCompactionStateNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompletedSnapshotsAvgTime"
+          resultAlias="RPCStatistics-60000.getCompletedSnapshotsAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompletedSnapshotsMaxTime"
+          resultAlias="RPCStatistics-60000.getCompletedSnapshotsMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompletedSnapshotsMinTime"
+          resultAlias="RPCStatistics-60000.getCompletedSnapshotsMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getCompletedSnapshotsNumOps"
+          resultAlias="RPCStatistics-60000.getCompletedSnapshotsNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHServerInfoAvgTime"
+          resultAlias="RPCStatistics-60000.getHServerInfoAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHServerInfoMaxTime"
+          resultAlias="RPCStatistics-60000.getHServerInfoMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHServerInfoMinTime"
+          resultAlias="RPCStatistics-60000.getHServerInfoMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHServerInfoNumOps"
+          resultAlias="RPCStatistics-60000.getHServerInfoNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHTableDescriptorsAvgTime"
+          resultAlias="RPCStatistics-60000.getHTableDescriptorsAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHTableDescriptorsMaxTime"
+          resultAlias="RPCStatistics-60000.getHTableDescriptorsMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHTableDescriptorsMinTime"
+          resultAlias="RPCStatistics-60000.getHTableDescriptorsMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getHTableDescriptorsNumOps"
+          resultAlias="RPCStatistics-60000.getHTableDescriptorsNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getLastFlushTimeAvgTime"
+          resultAlias="RPCStatistics-60000.getLastFlushTimeAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getLastFlushTimeMaxTime"
+          resultAlias="RPCStatistics-60000.getLastFlushTimeMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getLastFlushTimeMinTime"
+          resultAlias="RPCStatistics-60000.getLastFlushTimeMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getLastFlushTimeNumOps"
+          resultAlias="RPCStatistics-60000.getLastFlushTimeNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getMaxTime"
+          resultAlias="RPCStatistics-60000.getMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getMinTime"
+          resultAlias="RPCStatistics-60000.getMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getNumOps"
+          resultAlias="RPCStatistics-60000.getNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getOnlineRegionsAvgTime"
+          resultAlias="RPCStatistics-60000.getOnlineRegionsAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getOnlineRegionsMaxTime"
+          resultAlias="RPCStatistics-60000.getOnlineRegionsMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getOnlineRegionsMinTime"
+          resultAlias="RPCStatistics-60000.getOnlineRegionsMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getOnlineRegionsNumOps"
+          resultAlias="RPCStatistics-60000.getOnlineRegionsNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getRegionInfoAvgTime"
+          resultAlias="RPCStatistics-60000.getRegionInfoAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getRegionInfoMaxTime"
+          resultAlias="RPCStatistics-60000.getRegionInfoMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getRegionInfoMinTime"
+          resultAlias="RPCStatistics-60000.getRegionInfoMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getRegionInfoNumOps"
+          resultAlias="RPCStatistics-60000.getRegionInfoNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getStoreFileListAvgTime"
+          resultAlias="RPCStatistics-60000.getStoreFileListAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getStoreFileListMaxTime"
+          resultAlias="RPCStatistics-60000.getStoreFileListMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getStoreFileListMinTime"
+          resultAlias="RPCStatistics-60000.getStoreFileListMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="getStoreFileListNumOps"
+          resultAlias="RPCStatistics-60000.getStoreFileListNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementAvgTime"
+          resultAlias="RPCStatistics-60000.incrementAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementColumnValueAvgTime"
+          resultAlias="RPCStatistics-60000.incrementColumnValueAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementColumnValueMaxTime"
+          resultAlias="RPCStatistics-60000.incrementColumnValueMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementColumnValueMinTime"
+          resultAlias="RPCStatistics-60000.incrementColumnValueMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementColumnValueNumOps"
+          resultAlias="RPCStatistics-60000.incrementColumnValueNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementMaxTime"
+          resultAlias="RPCStatistics-60000.incrementMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementMinTime"
+          resultAlias="RPCStatistics-60000.incrementMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="incrementNumOps"
+          resultAlias="RPCStatistics-60000.incrementNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isMasterRunningAvgTime"
+          resultAlias="RPCStatistics-60000.isMasterRunningAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isMasterRunningMaxTime"
+          resultAlias="RPCStatistics-60000.isMasterRunningMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isMasterRunningMinTime"
+          resultAlias="RPCStatistics-60000.isMasterRunningMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isMasterRunningNumOps"
+          resultAlias="RPCStatistics-60000.isMasterRunningNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isRestoreSnapshotDoneAvgTime"
+          resultAlias="RPCStatistics-60000.isRestoreSnapshotDoneAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isRestoreSnapshotDoneMaxTime"
+          resultAlias="RPCStatistics-60000.isRestoreSnapshotDoneMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isRestoreSnapshotDoneMinTime"
+          resultAlias="RPCStatistics-60000.isRestoreSnapshotDoneMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isRestoreSnapshotDoneNumOps"
+          resultAlias="RPCStatistics-60000.isRestoreSnapshotDoneNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isSnapshotDoneAvgTime"
+          resultAlias="RPCStatistics-60000.isSnapshotDoneAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isSnapshotDoneMaxTime"
+          resultAlias="RPCStatistics-60000.isSnapshotDoneMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isSnapshotDoneMinTime"
+          resultAlias="RPCStatistics-60000.isSnapshotDoneMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="isSnapshotDoneNumOps"
+          resultAlias="RPCStatistics-60000.isSnapshotDoneNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="listSnapshotsAvgTime"
+          resultAlias="RPCStatistics-60000.listSnapshotsAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="listSnapshotsMaxTime"
+          resultAlias="RPCStatistics-60000.listSnapshotsMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="listSnapshotsMinTime"
+          resultAlias="RPCStatistics-60000.listSnapshotsMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="listSnapshotsNumOps"
+          resultAlias="RPCStatistics-60000.listSnapshotsNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="lockRowAvgTime"
+          resultAlias="RPCStatistics-60000.lockRowAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="lockRowMaxTime"
+          resultAlias="RPCStatistics-60000.lockRowMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="lockRowMinTime"
+          resultAlias="RPCStatistics-60000.lockRowMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="lockRowNumOps"
+          resultAlias="RPCStatistics-60000.lockRowNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyColumnAvgTime"
+          resultAlias="RPCStatistics-60000.modifyColumnAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyColumnMaxTime"
+          resultAlias="RPCStatistics-60000.modifyColumnMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyColumnMinTime"
+          resultAlias="RPCStatistics-60000.modifyColumnMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyColumnNumOps"
+          resultAlias="RPCStatistics-60000.modifyColumnNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyTableAvgTime"
+          resultAlias="RPCStatistics-60000.modifyTableAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyTableMaxTime"
+          resultAlias="RPCStatistics-60000.modifyTableMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyTableMinTime"
+          resultAlias="RPCStatistics-60000.modifyTableMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="modifyTableNumOps"
+          resultAlias="RPCStatistics-60000.modifyTableNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="moveAvgTime"
+          resultAlias="RPCStatistics-60000.moveAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="moveMaxTime"
+          resultAlias="RPCStatistics-60000.moveMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="moveMinTime"
+          resultAlias="RPCStatistics-60000.moveMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="moveNumOps"
+          resultAlias="RPCStatistics-60000.moveNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="multiAvgTime"
+          resultAlias="RPCStatistics-60000.multiAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="multiMaxTime"
+          resultAlias="RPCStatistics-60000.multiMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="multiMinTime"
+          resultAlias="RPCStatistics-60000.multiMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="multiNumOps"
+          resultAlias="RPCStatistics-60000.multiNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="mutateRowAvgTime"
+          resultAlias="RPCStatistics-60000.mutateRowAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="mutateRowMaxTime"
+          resultAlias="RPCStatistics-60000.mutateRowMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="mutateRowMinTime"
+          resultAlias="RPCStatistics-60000.mutateRowMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="mutateRowNumOps"
+          resultAlias="RPCStatistics-60000.mutateRowNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="nextAvgTime"
+          resultAlias="RPCStatistics-60000.nextAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="nextMaxTime"
+          resultAlias="RPCStatistics-60000.nextMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="nextMinTime"
+          resultAlias="RPCStatistics-60000.nextMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="nextNumOps"
+          resultAlias="RPCStatistics-60000.nextNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="NumOpenConnections"
+          resultAlias="RPCStatistics-60000.NumOpenConnections"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="offlineAvgTime"
+          resultAlias="RPCStatistics-60000.offlineAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="offlineMaxTime"
+          resultAlias="RPCStatistics-60000.offlineMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="offlineMinTime"
+          resultAlias="RPCStatistics-60000.offlineMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="offlineNumOps"
+          resultAlias="RPCStatistics-60000.offlineNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionAvgTime"
+          resultAlias="RPCStatistics-60000.openRegionAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionMaxTime"
+          resultAlias="RPCStatistics-60000.openRegionMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionMinTime"
+          resultAlias="RPCStatistics-60000.openRegionMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionNumOps"
+          resultAlias="RPCStatistics-60000.openRegionNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionsAvgTime"
+          resultAlias="RPCStatistics-60000.openRegionsAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionsMaxTime"
+          resultAlias="RPCStatistics-60000.openRegionsMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionsMinTime"
+          resultAlias="RPCStatistics-60000.openRegionsMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openRegionsNumOps"
+          resultAlias="RPCStatistics-60000.openRegionsNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openScannerAvgTime"
+          resultAlias="RPCStatistics-60000.openScannerAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openScannerMaxTime"
+          resultAlias="RPCStatistics-60000.openScannerMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openScannerMinTime"
+          resultAlias="RPCStatistics-60000.openScannerMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="openScannerNumOps"
+          resultAlias="RPCStatistics-60000.openScannerNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="priorityCallQueueLen"
+          resultAlias="RPCStatistics-60000.priorityCallQueueLen"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="putAvgTime"
+          resultAlias="RPCStatistics-60000.putAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="putMaxTime"
+          resultAlias="RPCStatistics-60000.putMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="putMinTime"
+          resultAlias="RPCStatistics-60000.putMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="putNumOps"
+          resultAlias="RPCStatistics-60000.putNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="ReceivedBytes"
+          resultAlias="RPCStatistics-60000.ReceivedBytes"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerReportAvgTime"
+          resultAlias="RPCStatistics-60000.regionServerReportAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerReportMaxTime"
+          resultAlias="RPCStatistics-60000.regionServerReportMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerReportMinTime"
+          resultAlias="RPCStatistics-60000.regionServerReportMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerReportNumOps"
+          resultAlias="RPCStatistics-60000.regionServerReportNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerStartupAvgTime"
+          resultAlias="RPCStatistics-60000.regionServerStartupAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerStartupMaxTime"
+          resultAlias="RPCStatistics-60000.regionServerStartupMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerStartupMinTime"
+          resultAlias="RPCStatistics-60000.regionServerStartupMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="regionServerStartupNumOps"
+          resultAlias="RPCStatistics-60000.regionServerStartupNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="replicateLogEntriesAvgTime"
+          resultAlias="RPCStatistics-60000.replicateLogEntriesAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="replicateLogEntriesMaxTime"
+          resultAlias="RPCStatistics-60000.replicateLogEntriesMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="replicateLogEntriesMinTime"
+          resultAlias="RPCStatistics-60000.replicateLogEntriesMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="replicateLogEntriesNumOps"
+          resultAlias="RPCStatistics-60000.replicateLogEntriesNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="replicationCallQueueLen"
+          resultAlias="RPCStatistics-60000.replicationCallQueueLen"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="reportRSFatalErrorAvgTime"
+          resultAlias="RPCStatistics-60000.reportRSFatalErrorAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="reportRSFatalErrorMaxTime"
+          resultAlias="RPCStatistics-60000.reportRSFatalErrorMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="reportRSFatalErrorMinTime"
+          resultAlias="RPCStatistics-60000.reportRSFatalErrorMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="reportRSFatalErrorNumOps"
+          resultAlias="RPCStatistics-60000.reportRSFatalErrorNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="restoreSnapshotAvgTime"
+          resultAlias="RPCStatistics-60000.restoreSnapshotAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="restoreSnapshotMaxTime"
+          resultAlias="RPCStatistics-60000.restoreSnapshotMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="restoreSnapshotMinTime"
+          resultAlias="RPCStatistics-60000.restoreSnapshotMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="restoreSnapshotNumOps"
+          resultAlias="RPCStatistics-60000.restoreSnapshotNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rollHLogWriterAvgTime"
+          resultAlias="RPCStatistics-60000.rollHLogWriterAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rollHLogWriterMaxTime"
+          resultAlias="RPCStatistics-60000.rollHLogWriterMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rollHLogWriterMinTime"
+          resultAlias="RPCStatistics-60000.rollHLogWriterMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rollHLogWriterNumOps"
+          resultAlias="RPCStatistics-60000.rollHLogWriterNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rpcAuthenticationFailures"
+          resultAlias="RPCStatistics-60000.rpcAuthenticationFailures"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rpcAuthenticationSuccesses"
+          resultAlias="RPCStatistics-60000.rpcAuthenticationSuccesses"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rpcAuthorizationFailures"
+          resultAlias="RPCStatistics-60000.rpcAuthorizationFailures"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="rpcAuthorizationSuccesses"
+          resultAlias="RPCStatistics-60000.rpcAuthorizationSuccesses"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcProcessingTimeAvgTime"
+          resultAlias="RPCStatistics-60000.RpcProcessingTimeAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcProcessingTimeMaxTime"
+          resultAlias="RPCStatistics-60000.RpcProcessingTimeMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcProcessingTimeMinTime"
+          resultAlias="RPCStatistics-60000.RpcProcessingTimeMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcProcessingTimeNumOps"
+          resultAlias="RPCStatistics-60000.RpcProcessingTimeNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcQueueTimeAvgTime"
+          resultAlias="RPCStatistics-60000.RpcQueueTimeAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcQueueTimeMaxTime"
+          resultAlias="RPCStatistics-60000.RpcQueueTimeMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcQueueTimeMinTime"
+          resultAlias="RPCStatistics-60000.RpcQueueTimeMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcQueueTimeNumOps"
+          resultAlias="RPCStatistics-60000.RpcQueueTimeNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcSlowResponseAvgTime"
+          resultAlias="RPCStatistics-60000.RpcSlowResponseAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcSlowResponseMaxTime"
+          resultAlias="RPCStatistics-60000.RpcSlowResponseMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcSlowResponseMinTime"
+          resultAlias="RPCStatistics-60000.RpcSlowResponseMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="RpcSlowResponseNumOps"
+          resultAlias="RPCStatistics-60000.RpcSlowResponseNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="SentBytes"
+          resultAlias="RPCStatistics-60000.SentBytes"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="shutdownAvgTime"
+          resultAlias="RPCStatistics-60000.shutdownAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="shutdownMaxTime"
+          resultAlias="RPCStatistics-60000.shutdownMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="shutdownMinTime"
+          resultAlias="RPCStatistics-60000.shutdownMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="shutdownNumOps"
+          resultAlias="RPCStatistics-60000.shutdownNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="snapshotAvgTime"
+          resultAlias="RPCStatistics-60000.snapshotAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="snapshotMaxTime"
+          resultAlias="RPCStatistics-60000.snapshotMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="snapshotMinTime"
+          resultAlias="RPCStatistics-60000.snapshotMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="snapshotNumOps"
+          resultAlias="RPCStatistics-60000.snapshotNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="splitRegionAvgTime"
+          resultAlias="RPCStatistics-60000.splitRegionAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="splitRegionMaxTime"
+          resultAlias="RPCStatistics-60000.splitRegionMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="splitRegionMinTime"
+          resultAlias="RPCStatistics-60000.splitRegionMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="splitRegionNumOps"
+          resultAlias="RPCStatistics-60000.splitRegionNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopAvgTime"
+          resultAlias="RPCStatistics-60000.stopAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopMasterAvgTime"
+          resultAlias="RPCStatistics-60000.stopMasterAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopMasterMaxTime"
+          resultAlias="RPCStatistics-60000.stopMasterMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopMasterMinTime"
+          resultAlias="RPCStatistics-60000.stopMasterMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopMasterNumOps"
+          resultAlias="RPCStatistics-60000.stopMasterNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopMaxTime"
+          resultAlias="RPCStatistics-60000.stopMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopMinTime"
+          resultAlias="RPCStatistics-60000.stopMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="stopNumOps"
+          resultAlias="RPCStatistics-60000.stopNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="synchronousBalanceSwitchAvgTime"
+          resultAlias="RPCStatistics-60000.synchronousBalanceSwitchAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="synchronousBalanceSwitchMaxTime"
+          resultAlias="RPCStatistics-60000.synchronousBalanceSwitchMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="synchronousBalanceSwitchMinTime"
+          resultAlias="RPCStatistics-60000.synchronousBalanceSwitchMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="synchronousBalanceSwitchNumOps"
+          resultAlias="RPCStatistics-60000.synchronousBalanceSwitchNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unassignAvgTime"
+          resultAlias="RPCStatistics-60000.unassignAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unassignMaxTime"
+          resultAlias="RPCStatistics-60000.unassignMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unassignMinTime"
+          resultAlias="RPCStatistics-60000.unassignMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unassignNumOps"
+          resultAlias="RPCStatistics-60000.unassignNumOps"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unlockRowAvgTime"
+          resultAlias="RPCStatistics-60000.unlockRowAvgTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unlockRowMaxTime"
+          resultAlias="RPCStatistics-60000.unlockRowMaxTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unlockRowMinTime"
+          resultAlias="RPCStatistics-60000.unlockRowMinTime"/>
+
+    <query objectName="hadoop:service=HBase,name=RPCStatistics-60000"
+            attribute="unlockRowNumOps"
+          resultAlias="RPCStatistics-60000.unlockRowNumOps"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="cluster_requests"
+          resultAlias="MasterStatistics.cluster_requests"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotCloneTimeAvgTime"
+          resultAlias="MasterStatistics.snapshotCloneTimeAvgTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotCloneTimeMaxTime"
+          resultAlias="MasterStatistics.snapshotCloneTimeMaxTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotCloneTimeMinTime"
+          resultAlias="MasterStatistics.snapshotCloneTimeMinTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotCloneTimeNumOps"
+          resultAlias="MasterStatistics.snapshotCloneTimeNumOps"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotRestoreTimeAvgTime"
+          resultAlias="MasterStatistics.snapshotRestoreTimeAvgTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotRestoreTimeMaxTime"
+          resultAlias="MasterStatistics.snapshotRestoreTimeMaxTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotRestoreTimeMinTime"
+          resultAlias="MasterStatistics.snapshotRestoreTimeMinTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotRestoreTimeNumOps"
+          resultAlias="MasterStatistics.snapshotRestoreTimeNumOps"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotTimeAvgTime"
+          resultAlias="MasterStatistics.snapshotTimeAvgTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotTimeMaxTime"
+          resultAlias="MasterStatistics.snapshotTimeMaxTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotTimeMinTime"
+          resultAlias="MasterStatistics.snapshotTimeMinTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="snapshotTimeNumOps"
+          resultAlias="MasterStatistics.snapshotTimeNumOps"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitSizeAvgTime"
+          resultAlias="MasterStatistics.splitSizeAvgTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitSizeMaxTime"
+          resultAlias="MasterStatistics.splitSizeMaxTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitSizeMinTime"
+          resultAlias="MasterStatistics.splitSizeMinTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitSizeNumOps"
+          resultAlias="MasterStatistics.splitSizeNumOps"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitTimeAvgTime"
+          resultAlias="MasterStatistics.splitTimeAvgTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitTimeMaxTime"
+          resultAlias="MasterStatistics.splitTimeMaxTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitTimeMinTime"
+          resultAlias="MasterStatistics.splitTimeMinTime"/>
+
+    <query objectName="hadoop:service=Master,name=MasterStatistics"
+            attribute="splitTimeNumOps"
+          resultAlias="MasterStatistics.splitTimeNumOps"/>
+
+  </queries>
+{% for minion in minions['graphite-carbon'] -%}
+  <outputWriter class="org.jmxtrans.agent.GraphitePlainTextTcpOutputWriter">
+    <host>{{ minion }}</host>
+    <port>2003</port>
+    <namePrefix>{{ host }}.hbase-master.</namePrefix>
+  </outputWriter>
+{% endfor -%}
+  <collectIntervalInSeconds>20</collectIntervalInSeconds>
+</jmxtrans-agent>

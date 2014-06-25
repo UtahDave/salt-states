@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-neutron-plugin-bigswitch-agent": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p neutron-plugin-bigswitch-agent -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-neutron-plugin-bigswitch-agent": {
+      "command"     : "/etc/sensu/plugins/openstack/neutron/neutron-agent-status.py",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

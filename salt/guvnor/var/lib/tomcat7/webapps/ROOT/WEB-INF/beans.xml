@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans             xmlns="http://java.sun.com/xml/ns/javaee"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xmlns:s="urn:java:ee"
+              xmlns:weld="http://jboss.org/schema/weld/beans"
+          xmlns:security="urn:java:org.jboss.seam.security"
+  xmlns:guvnorRepository="urn:java:org.drools.guvnor.server.repository"
+    xmlns:guvnorSecurity="urn:java:org.drools.guvnor.server.security"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee  http://java.sun.com/xml/ns/javaee/beans_1_0.xsd
+                          http://jboss.org/schema/weld/beans http://jboss.org/schema/weld/beans_1_1.xsd">
+
+  <guvnorRepository:GuvnorBootstrapConfiguration>
+    <s:modifies/>
+    <guvnorRepository:properties>
+      <s:entry>
+        <s:key>org.drools.repository.configurator</s:key>
+        <s:value>org.drools.repository.jackrabbit.JackrabbitRepositoryConfigurator</s:value>
+      </s:entry>
+      <s:entry>
+        <s:key>repository.root.directory</s:key>
+        <s:value>/mnt/guvnor</s:value>
+      </s:entry>
+    </guvnorRepository:properties>
+  </guvnorRepository:GuvnorBootstrapConfiguration>
+  <security:IdentityImpl>
+    <s:modifies/>
+    <security:authenticatorName>jaasAuthenticator</security:authenticatorName>
+  </security:IdentityImpl>
+  <security:jaas.JaasAuthenticator>
+    <s:modifies/>
+    <security:jaasConfigName>unix</security:jaasConfigName>
+  </security:jaas.JaasAuthenticator>
+  <weld:scan>
+    <weld:exclude name="org.jboss.seam.security.permission.RuleBasedPermissionResolver"/>
+    <weld:exclude name="org.drools.guvnor.gwtutil.**"/>
+    <weld:exclude name="org.drools.guvnor.client.**"/>
+  </weld:scan>
+</beans>

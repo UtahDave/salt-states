@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-salt-master": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '/usr/bin/salt-master' -C 1 -W 8 -w 10 -c 17",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

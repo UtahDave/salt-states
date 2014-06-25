@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-ironic-conductor": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p ironic-conductor -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

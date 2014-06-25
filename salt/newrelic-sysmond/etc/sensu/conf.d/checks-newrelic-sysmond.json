@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-newrelic-sysmond": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '/usr/sbin/nrsysmond' -C 1 -w 3 -c 4",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

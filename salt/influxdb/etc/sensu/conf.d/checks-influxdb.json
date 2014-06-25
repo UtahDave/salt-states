@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-influxdb": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p influxdb -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

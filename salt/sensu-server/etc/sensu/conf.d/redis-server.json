@@ -1,0 +1,9 @@
+{% set minions = salt['roles.list_minions']('redis-server') -%}
+{% if  minions['redis-server'] -%}
+{
+  "redis"          : {
+    "host"         :  "{{ minions['redis-server'][0]|default('localhost') }}",
+    "port"         :   6379
+  }
+}
+{% endif -%}

@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-ceilometer-agent-notification": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p ceilometer-agent-notification -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

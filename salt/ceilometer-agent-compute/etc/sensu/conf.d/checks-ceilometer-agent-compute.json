@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-ceilometer-agent-compute": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p ceilometer-agent-compute -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-ceilometer-agent-compute": {
+      "command"     : "/etc/sensu/plugins/openstack/ceilometer/check_ceilometer-agent-compute.sh",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

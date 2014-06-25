@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-racoon": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p racoon -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

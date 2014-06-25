@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-ironic-api": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p ironic-api -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

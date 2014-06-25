@@ -1,0 +1,49 @@
+<project       xmlns="http://maven.apache.org/POM/4.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- The Basics -->
+  <groupId>com.navteq.places.deployment</groupId>
+  <artifactId>war.unpack</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <!-- Build Settings -->
+  <build>
+    <defaultGoal>process-sources</defaultGoal>
+    <extensions>
+      <extension>
+        <groupId>org.springframework.build</groupId>
+        <artifactId>aws-maven</artifactId>
+        <version>RELEASE</version>
+      </extension>
+    </extensions>
+    <plugins>
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>process-sources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>${maven3.groupId}</groupId>
+                  <artifactId>${maven3.artifactId}</artifactId>
+                  <version>${maven3.version}</version>
+                  <type>war</type>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>/var/lib/tomcat7/webapps/ROOT</outputDirectory>
+              <stripVersion>true</stripVersion>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-lxc-docker": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p docker -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-lxc-docker-container": {
+      "command"     : "/etc/sensu/plugins/docker/check-docker-container.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

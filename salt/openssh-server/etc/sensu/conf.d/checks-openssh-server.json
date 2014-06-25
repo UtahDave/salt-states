@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-openssh-server": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '/usr/sbin/sshd' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-openssh-server-network-banner": {
+      "command"     : "/etc/sensu/plugins/network/check-banner.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

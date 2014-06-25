@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-hadoop-hdfs-journalnode": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'org.apache.hadoop.hdfs.qjournal.server.JournalNode' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

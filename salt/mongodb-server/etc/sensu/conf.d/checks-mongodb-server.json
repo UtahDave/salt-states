@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "check-process-mongodb-server": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p mongodb -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-mongodb-server-alive": {
+      "command"     : "/etc/sensu/plugins/mongodb/check_mongodb.py",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-mongodb-server": {
+      "command"     : "/etc/sensu/plugins/mongodb/mongodb-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

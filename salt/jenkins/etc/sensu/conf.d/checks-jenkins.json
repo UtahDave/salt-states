@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "check-http-jenkins": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '8080' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-jenkins": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '/usr/bin/daemon --name=jenkins' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-jenkins-job-status": {
+      "command"     : "/etc/sensu/plugins/jenkins/check-jenkins-job-status.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

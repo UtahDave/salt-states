@@ -1,0 +1,18 @@
+{% set host = salt['config.get']('host') -%}
+{
+  "checks": {
+    "check-process-php5-fpm": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'php-fpm: master' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-php5-fpm": {
+      "command"     : "/etc/sensu/plugins/php-fpm/php-fpm-metrics.rb --scheme {{ host }}.php5-fpm --url http://localhost:8001/php5-fpm-status",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

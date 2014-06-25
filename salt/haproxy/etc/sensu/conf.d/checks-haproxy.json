@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "check-process-haproxy": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p haproxy -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-haproxy": {
+      "command"     : "/etc/sensu/plugins/haproxy/check-haproxy.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-haproxy": {
+      "command"     : "/etc/sensu/plugins/haproxy/haproxy-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

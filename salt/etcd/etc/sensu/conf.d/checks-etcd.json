@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "check-http-etcd": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '4001' -p '/version'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-etcd": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p etcd -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-etcd": {
+      "command"     : "/etc/sensu/plugins/etcd/etcd-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "check-process-keystone": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p keystone -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-keystone-api": {
+      "command"     : "/etc/sensu/plugins/openstack/keystone/check_keystone-api.sh",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-keystone-tokens": {
+      "command"     : "/etc/sensu/plugins/openstack/keystone/keystone-token-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

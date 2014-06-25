@@ -1,0 +1,9 @@
+{% set minions = salt['roles.list_minions']('sensu-api') -%}
+{% if  minions['sensu-api'] -%}
+{
+  "api"            : {
+    "host"         :  "{{ minions['sensu-api'][0]|default('localhost') }}",
+    "port"         :   4567
+  }
+}
+{% endif -%}

@@ -1,0 +1,8 @@
+#!/usr/bin/ruby
+if (ret = %x[curl http://localhost:5984]) =~ /Welcome/
+  puts "CouchDB OK"
+  exit(0) # STATUS_OK
+else
+  puts "'curl http://localhost:5984' returned: '#{ret.strip}'"
+  exit(2) # STATUS_CRITICAL
+end

@@ -1,0 +1,12 @@
+{% set minions = salt['roles.list_minions']('rabbitmq-server') -%}
+{% if  minions['rabbitmq-server'] -%}
+{
+  "rabbitmq"       : {
+    "host"         :  "{{ minions['rabbitmq-server'][0]|default('localhost') }}",
+    "port"         :   5672,
+    "user"         :  "sensu",
+    "password"     :  "mypass",
+    "vhost"        : "/sensu"
+  }
+}
+{% endif -%}

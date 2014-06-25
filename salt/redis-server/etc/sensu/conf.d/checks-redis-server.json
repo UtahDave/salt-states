@@ -1,0 +1,54 @@
+{% set host    = salt['config.get']('host') -%}
+{% set minions = salt['roles.list_minions']('redis-server') -%}
+{
+  "checks": {
+    "check-process-redis-server": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '/usr/(bin|sbin)/redis-server' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-redis-server-info": {
+      "command"     : "/etc/sensu/plugins/redis/check-redis-info.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    {% if minions['redis-server']|count > 1 -%}
+    "check-redis-server-slaves": {
+      "command"     : "/etc/sensu/plugins/redis/check-redis-slave-status.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    {% endif -%}
+    "check-redis-server-memory": {
+      "command"     : "/etc/sensu/plugins/redis/check-redis-memory.rb -w 12288 -c 16384",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-redis-server": {
+      "command"     : "/etc/sensu/plugins/redis/redis-graphite.rb    --scheme {{ host }}.redis-server",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+{#
+    "check-redis-server-list-length": {
+      "command"     : "/etc/sensu/plugins/redis/check-redis-list-length.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-redis-server-list-length": {
+      "command"     : "/etc/sensu/plugins/redis/redis-llen-metric.rb --scheme {{ host }}.redis-server",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+-#}
+  }
+}

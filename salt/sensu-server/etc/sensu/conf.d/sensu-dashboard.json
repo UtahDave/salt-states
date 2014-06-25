@@ -1,0 +1,11 @@
+{% set minions = salt['roles.list_minions']('sensu-dashboard') -%}
+{% if  minions['sensu-dashboard'] -%}
+{
+  "dashboard"      : {
+    "host"         :  "{{ minions['sensu-dashboard'][0]|default('localhost') }}",
+    "port"         :   8080,
+    "user"         :  "admin",
+    "password"     :  "secret"
+  }
+}
+{% endif -%}

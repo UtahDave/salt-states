@@ -1,0 +1,55 @@
+{
+  "checks": {
+    "check-process-mysql-server": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p mysql-server -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-mysql-innodb-lock": {
+      "command"     : "/etc/sensu/plugins/mysql/mysql-innodb-lock.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-mysql-server-alive": {
+      "command"     : "/etc/sensu/plugins/mysql/mysql-alive.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-mysql-server-replication": {
+      "command"     : "/etc/sensu/plugins/mysql/mysql-replication-status.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-mysql-server": {
+      "command"     : "/etc/sensu/plugins/mysql/mysql-graphite.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+{#
+    "check-mysql-server-connections": {
+      "command"     : "/etc/sensu/plugins/mysql/mysql-connections.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-mysql-server-disk": {
+      "command"     : "/etc/sensu/plugins/mysql/mysql-disk.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "cloudwatch-mysql-server": {
+      "command"     : "/etc/sensu/plugins/mysql/cloudwatch-mysql-sensu.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+-#}
+  }
+}

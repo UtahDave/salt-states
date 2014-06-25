@@ -1,0 +1,22 @@
+{
+  "checks": {
+    "check-process-ntp": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p ntp -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-ntp": {
+      "command"     : "/etc/sensu/plugins/system/check-ntp.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-ntp-stats": {
+      "command"     : "/etc/sensu/plugins/system/ntpstats-metrics.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

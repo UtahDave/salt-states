@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "check-http-gitlab": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '80' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-gitlab": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p gitlab -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-resque": {
+      "command"     : "/etc/sensu/plugins/resque/resque-metrics.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

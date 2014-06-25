@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-system-bluepill": {
+      "command"     : "/etc/sensu/plugins/system/check-bluepill-procs.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

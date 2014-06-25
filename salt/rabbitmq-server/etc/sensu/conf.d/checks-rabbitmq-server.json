@@ -1,0 +1,61 @@
+{% set host = salt['config.get']('host') -%}
+{
+  "checks": {
+    "check-http-rabbitmq-server": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '15672' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-rabbitmq-server-beam": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'bin/beam' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-rabbitmq-server-epmd": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'bin/epmd' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-rabbitmq-server-alive": {
+      "command"     : "/etc/sensu/plugins/rabbitmq/rabbitmq-alive.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-rabbitmq-server-amqp": {
+      "command"     : "/etc/sensu/plugins/rabbitmq/rabbitmq-amqp-alive.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-rabbitmq-server-messages": {
+      "command"     : "/etc/sensu/plugins/rabbitmq/check-rabbitmq-messages.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-rabbitmq-server-queue": {
+      "command"     : "/etc/sensu/plugins/rabbitmq/check-rabbitmq-queue.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-rabbitmq-server-overview": {
+      "command"     : "/etc/sensu/plugins/rabbitmq/rabbitmq-overview-metrics.rb --scheme {{ host }}.rabbitmq-server",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-rabbitmq-server-queue": {
+      "command"     : "/etc/sensu/plugins/rabbitmq/rabbitmq-queue-metrics.rb    --scheme {{ host }}.rabbitmq-server",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

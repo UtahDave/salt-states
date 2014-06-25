@@ -1,0 +1,27 @@
+{
+  "checks": {
+{# redundant to jmxtrans
+    "metric-java-common-heap": {
+      "command"     : "/etc/sensu/plugins/java/java-heap-graphite.sh",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-java-common-heap": {
+      "command"     : "/etc/sensu/plugins/java/java-heap-pcnt.sh",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-java-common-permgen": {
+      "command"     : "/etc/sensu/plugins/java/java-permgen.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+-#}
+  }
+}

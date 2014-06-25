@@ -1,0 +1,4 @@
+auth       --useshadow  --enablemd5
+rootpw     --iscrypted   $default_password_crypted
+selinux    --disabled
+firewall   --disabled

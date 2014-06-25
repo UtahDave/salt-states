@@ -1,0 +1,23 @@
+{
+  "checks": {
+    "check-process-nginx-master": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'nginx: master process' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-nginx-worker": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p 'nginx: worker process' -C 1 -W 4 -w 6 -c 9",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-nginx": {
+      "command"     : "/etc/sensu/plugins/nginx/nginx-metrics.rb -h localhost",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

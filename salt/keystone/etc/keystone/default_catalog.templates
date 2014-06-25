@@ -1,0 +1,41 @@
+{% set roles = [] -%}
+{% do  roles.append('cinder-api') -%}
+{% do  roles.append('glance-api') -%}
+{% do  roles.append('keystone') -%}
+{% do  roles.append('nova-api-ec2') -%}
+{% set minions = salt['roles.list_minions'](roles) -%}
+# config for templated.Catalog, using camelCase because I don't want to do
+# translations for keystone compat
+{% if minions['keystone'] -%}
+catalog.RegionOne.identity.publicURL = http://{{ minions['keystone'][0] }}:$(public_port)s/v2.0
+catalog.RegionOne.identity.adminURL = http://{{ minions['keystone'][0] }}:$(admin_port)s/v2.0
+catalog.RegionOne.identity.internalURL = http://{{ minions['keystone'][0] }}:$(public_port)s/v2.0
+catalog.RegionOne.identity.name = Identity Service
+{% endif -%}
+
+# fake compute service for now to help novaclient tests work
+catalog.RegionOne.compute.publicURL = http://localhost:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.adminURL = http://localhost:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.internalURL = http://localhost:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.name = Compute Service
+
+{% if minions['cinder-api'] -%}
+catalog.RegionOne.volume.publicURL = http://{{ minions['cinder-api'][0] }}:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.adminURL = http://{{ minions['cinder-api'][0] }}:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.internalURL = http://{{ minions['cinder-api'][0] }}:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.name = Volume Service
+{% endif -%}
+
+{% if minions['nova-api-ec2'] -%}
+catalog.RegionOne.ec2.publicURL = http://{{ minions['nova-api-ec2'][0] }}:8773/services/Cloud
+catalog.RegionOne.ec2.adminURL = http://{{ minions['nova-api-ec2'][0] }}:8773/services/Admin
+catalog.RegionOne.ec2.internalURL = http://{{ minions['nova-api-ec2'][0] }}:8773/services/Cloud
+catalog.RegionOne.ec2.name = EC2 Service
+{% endif -%}
+
+{% if minions['glance-api'] -%}
+catalog.RegionOne.image.publicURL = http://{{ minions['glance-api'][0] }}:9292/v1
+catalog.RegionOne.image.adminURL = http://{{ minions['glance-api'][0] }}:9292/v1
+catalog.RegionOne.image.internalURL = http://{{ minions['glance-api'][0] }}:9292/v1
+catalog.RegionOne.image.name = Image Service
+{% endif -%}

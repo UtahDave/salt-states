@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-logstash": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p '(logstash.jar|logstash/runner.rb) agent' -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

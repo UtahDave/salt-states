@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-http-elasticsearch-head": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '9200' -p '/_plugin/head/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

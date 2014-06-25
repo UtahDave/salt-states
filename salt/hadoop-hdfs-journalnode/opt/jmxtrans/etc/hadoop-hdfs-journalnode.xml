@@ -1,0 +1,525 @@
+{% set host    = salt['config.get']('host') -%}
+{% set minions = salt['roles.list_minions']('graphite-carbon') -%}
+<jmxtrans-agent>
+  <queries>
+
+    <query objectName="java.lang:type=ClassLoading"
+            attribute="LoadedClassCount"
+          resultAlias="java.lang.ClassLoading.LoadedClassCount"/>
+
+    <query objectName="java.lang:type=ClassLoading"
+            attribute="TotalLoadedClassCount"
+          resultAlias="java.lang.ClassLoading.TotalLoadedClassCount"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="committed"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.committed"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="max"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.max"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="used"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.used"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="committed"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.committed"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="max"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.max"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="used"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.CodeCache.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.CodeCache.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.CodeCache.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.CodeCache.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=OperatingSystem"
+            attribute="SystemLoadAverage"
+          resultAlias="java.lang.OperatingSystem.SystemLoadAverage"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="CurrentThreadCpuTime"
+          resultAlias="java.lang.Threading.CurrentThreadCpuTime"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="PeakThreadCount"
+          resultAlias="java.lang.Threading.PeakThreadCount"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="ThreadCount"
+          resultAlias="java.lang.Threading.ThreadCount"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="BatchesWritten"
+          resultAlias="Journal-journalhdfs1.BatchesWritten"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="BatchesWrittenWhileLagging"
+          resultAlias="Journal-journalhdfs1.BatchesWrittenWhileLagging"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="BytesWritten"
+          resultAlias="Journal-journalhdfs1.BytesWritten"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="CurrentLagTxns"
+          resultAlias="Journal-journalhdfs1.CurrentLagTxns"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="LastPromisedEpoch"
+          resultAlias="Journal-journalhdfs1.LastPromisedEpoch"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="LastWriterEpoch"
+          resultAlias="Journal-journalhdfs1.LastWriterEpoch"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="LastWrittenTxId"
+          resultAlias="Journal-journalhdfs1.LastWrittenTxId"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs300s50thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs300s50thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs300s75thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs300s75thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs300s90thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs300s90thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs300s95thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs300s95thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs300s99thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs300s99thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs300sNumOps"
+          resultAlias="Journal-journalhdfs1.Syncs300sNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs3600s50thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs3600s50thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs3600s75thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs3600s75thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs3600s90thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs3600s90thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs3600s95thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs3600s95thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs3600s99thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs3600s99thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs3600sNumOps"
+          resultAlias="Journal-journalhdfs1.Syncs3600sNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs60s50thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs60s50thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs60s75thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs60s75thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs60s90thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs60s90thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs60s95thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs60s95thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs60s99thPercentileLatencyMicros"
+          resultAlias="Journal-journalhdfs1.Syncs60s99thPercentileLatencyMicros"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="Syncs60sNumOps"
+          resultAlias="Journal-journalhdfs1.Syncs60sNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=Journal-journalhdfs1"
+            attribute="TxnsWritten"
+          resultAlias="Journal-journalhdfs1.TxnsWritten"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="GcCount"
+          resultAlias="JvmMetrics.GcCount"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="GcTimeMillis"
+          resultAlias="JvmMetrics.GcTimeMillis"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="LogError"
+          resultAlias="JvmMetrics.LogError"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="LogFatal"
+          resultAlias="JvmMetrics.LogFatal"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="LogInfo"
+          resultAlias="JvmMetrics.LogInfo"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="LogWarn"
+          resultAlias="JvmMetrics.LogWarn"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="MemHeapCommittedM"
+          resultAlias="JvmMetrics.MemHeapCommittedM"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="MemHeapUsedM"
+          resultAlias="JvmMetrics.MemHeapUsedM"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="MemNonHeapCommittedM"
+          resultAlias="JvmMetrics.MemNonHeapCommittedM"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="MemNonHeapUsedM"
+          resultAlias="JvmMetrics.MemNonHeapUsedM"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="ThreadsBlocked"
+          resultAlias="JvmMetrics.ThreadsBlocked"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="ThreadsNew"
+          resultAlias="JvmMetrics.ThreadsNew"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="ThreadsRunnable"
+          resultAlias="JvmMetrics.ThreadsRunnable"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="ThreadsTerminated"
+          resultAlias="JvmMetrics.ThreadsTerminated"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="ThreadsTimedWaiting"
+          resultAlias="JvmMetrics.ThreadsTimedWaiting"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=JvmMetrics"
+            attribute="ThreadsWaiting"
+          resultAlias="JvmMetrics.ThreadsWaiting"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="DroppedPubAll"
+          resultAlias="MetricsSystem.Control.DroppedPubAll"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="NumActiveSinks"
+          resultAlias="MetricsSystem.Control.NumActiveSinks"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="NumActiveSources"
+          resultAlias="MetricsSystem.Control.NumActiveSources"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="NumAllSinks"
+          resultAlias="MetricsSystem.Control.NumAllSinks"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="NumAllSources"
+          resultAlias="MetricsSystem.Control.NumAllSources"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="PublishAvgTime"
+          resultAlias="MetricsSystem.Control.PublishAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="PublishNumOps"
+          resultAlias="MetricsSystem.Control.PublishNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="SnapshotAvgTime"
+          resultAlias="MetricsSystem.Control.SnapshotAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=MetricsSystem,sub=Control"
+            attribute="SnapshotNumOps"
+          resultAlias="MetricsSystem.Control.SnapshotNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="CallQueueLength"
+          resultAlias="RpcActivityForPort8485.CallQueueLength"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="NumOpenConnections"
+          resultAlias="RpcActivityForPort8485.NumOpenConnections"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="ReceivedBytes"
+          resultAlias="RpcActivityForPort8485.ReceivedBytes"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcAuthenticationFailures"
+          resultAlias="RpcActivityForPort8485.RpcAuthenticationFailures"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcAuthenticationSuccesses"
+          resultAlias="RpcActivityForPort8485.RpcAuthenticationSuccesses"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcAuthorizationFailures"
+          resultAlias="RpcActivityForPort8485.RpcAuthorizationFailures"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcAuthorizationSuccesses"
+          resultAlias="RpcActivityForPort8485.RpcAuthorizationSuccesses"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcProcessingTimeAvgTime"
+          resultAlias="RpcActivityForPort8485.RpcProcessingTimeAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcProcessingTimeNumOps"
+          resultAlias="RpcActivityForPort8485.RpcProcessingTimeNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcQueueTimeAvgTime"
+          resultAlias="RpcActivityForPort8485.RpcQueueTimeAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="RpcQueueTimeNumOps"
+          resultAlias="RpcActivityForPort8485.RpcQueueTimeNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcActivityForPort8485"
+            attribute="SentBytes"
+          resultAlias="RpcActivityForPort8485.SentBytes"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="AcceptRecoveryAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.AcceptRecoveryAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="AcceptRecoveryNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.AcceptRecoveryNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="FinalizeLogSegmentAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.FinalizeLogSegmentAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="FinalizeLogSegmentNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.FinalizeLogSegmentNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="FormatAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.FormatAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="FormatNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.FormatNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="GetEditLogManifestAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.GetEditLogManifestAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="GetEditLogManifestNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.GetEditLogManifestNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="GetJournalStateAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.GetJournalStateAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="GetJournalStateNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.GetJournalStateNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="IsFormattedAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.IsFormattedAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="IsFormattedNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.IsFormattedNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="JournalAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.JournalAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="JournalNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.JournalNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="NewEpochAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.NewEpochAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="NewEpochNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.NewEpochNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="PrepareRecoveryAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.PrepareRecoveryAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="PrepareRecoveryNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.PrepareRecoveryNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="PurgeLogsAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.PurgeLogsAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="PurgeLogsNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.PurgeLogsNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="StartLogSegmentAvgTime"
+          resultAlias="RpcDetailedActivityForPort8485.StartLogSegmentAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=RpcDetailedActivityForPort8485"
+            attribute="StartLogSegmentNumOps"
+          resultAlias="RpcDetailedActivityForPort8485.StartLogSegmentNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=UgiMetrics"
+            attribute="LoginFailureAvgTime"
+          resultAlias="UgiMetrics.LoginFailureAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=UgiMetrics"
+            attribute="LoginFailureNumOps"
+          resultAlias="UgiMetrics.LoginFailureNumOps"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=UgiMetrics"
+            attribute="LoginSuccessAvgTime"
+          resultAlias="UgiMetrics.LoginSuccessAvgTime"/>
+
+    <query objectName="Hadoop:service=JournalNode,name=UgiMetrics"
+            attribute="LoginSuccessNumOps"
+          resultAlias="UgiMetrics.LoginSuccessNumOps"/>
+
+  </queries>
+{% for minion in minions['graphite-carbon'] -%}
+  <outputWriter class="org.jmxtrans.agent.GraphitePlainTextTcpOutputWriter">
+    <host>{{ minion }}</host>
+    <port>2003</port>
+    <namePrefix>{{ host }}.hadoop-hdfs-journalnode.</namePrefix>
+  </outputWriter>
+{% endfor -%}
+  <collectIntervalInSeconds>20</collectIntervalInSeconds>
+</jmxtrans-agent>

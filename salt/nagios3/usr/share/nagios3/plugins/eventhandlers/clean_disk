@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+#-------------------------------------------------------------------------------
+HOSTADDRESS="${1}"
+      STATE="${2}"
+       TYPE="${3}"
+    ATTEMPT="${4}"
+         FS="${5}"
+#-------------------------------------------------------------------------------
+if   [[ "${STATE}"   =  "CRITICAL"    ]]                                       \
+&& ( [[ "${TYPE}"    =  "HARD"        ]]                                       \
+|| ( [[ "${TYPE}"    =  "SOFT"        ]]                                       \
+&&   [   ${ATTEMPT} -ge 3              ] ) )
+then
+    if   [[ "${FS}"  =~ "lcms_common" ]]                                       \
+    ||   [[ "${FS}"  =~ "lro_common"  ]]
+    then
+        ssh root@schilcmsapp01                                                 \
+       "( find ${FS} -type  f                                                  \
+                   ! -regex '.*/splunk/.*'                                     \
+                  \( -name  'app.log*'                                         \
+                  -o -name  'catalina.????-??-??.log*'                         \
+                  -o -name  'catalina.out*'                                    \
+                  -o -name  'job_????????????_????.log*'                       \
+                  -o -name  'jobtracker_extract_??.log*'                       \
+                  -o -name  'nohup.out*'                                       \
+                  -o -name  'server.log*'                                      \
+                  -o -name  'trash_deploy_*'                                   \
+                  -o -name  '*_access_log.????-??-??.txt'                      \
+                  \) -mtime +14                                                \
+                     -exec  rm -fv {} 2>/dev/null \; ;
+          find ${FS} -type  f                                                  \
+                   ! -regex '.*/splunk/.*'                                     \
+                  \( -name  'app.log*'                                         \
+                  -o -name  'catalina.????-??-??.log*'                         \
+                  -o -name  'catalina.out*'                                    \
+                  -o -name  'nohup.out*'                                       \
+                  -o -name  'server.log*'                                      \
+                  -o -name  'trash_deploy_*'                                   \
+                  -o -name  '*_access_log.????-??-??.txt'                      \
+                  \) -mtime +7                                                 \
+                     -exec  gzip -v -9 {} 2>/dev/null \; ;
+          find ${FS} -type  f                                                  \
+                   ! -regex '.*/splunk/.*'                                     \
+                  \( -name  'app.log*'                                         \
+                  -o -name  'catalina.????-??-??.log*'                         \
+                  -o -name  'catalina.out*'                                    \
+                  -o -name  'nohup.out*'                                       \
+                  -o -name  'server.log*'                                      \
+                  -o -name  'trash_deploy_*'                                   \
+                  -o -name  '*_access_log.????-??-??.txt'                      \
+                  \) -size  +10G                                               \
+                     -exec  rm -fv {} 2>/dev/null \; ;
+          find ${FS}/home                                                      \
+                     -type  f                                                  \
+                     -mtime +30                                                \
+                   ! -name  '*.gz'                                             \
+                     -size  +5G                                                \
+                     -exec  gzip -9 {} 2>/dev/null \; ;
+        ) &" > /var/tmp/clean_lcms_common_$( date '+%Y%m%d_%H%M%S' ).log
+    elif [[ "${FS}"  =~ "/tmp" ]]                                              \
+    &&   [[ "${HOSTADDRESS}"   ]]
+    then
+        ssh root@${HOSTADDRESS}                                                \
+       "( find ${FS} -type  f                                                  \
+                     -mtime +7                                                 \
+                     -exec  rm -fv {} 2>/dev/null \; ;
+        ) &" > /var/tmp/clean_${HOSTADDRESS}_tmp$( date '+%Y%m%d_%H%M%S' ).log
+    fi
+fi
+#-------------------------------------------------------------------------------

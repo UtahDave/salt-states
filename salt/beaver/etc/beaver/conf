@@ -1,0 +1,6 @@
+{% set minions = salt['roles.list_minions']('logstash') -%}
+[beaver]
+logstash_version: 1
+{% if minions['logstash'] -%}
+zeromq_address:   tcp://{{ minions['logstash'][0] }}:2120
+{% endif -%}

@@ -1,0 +1,65 @@
+{% set devs    = salt['cmd.run']('ls -1d /dev/{s,{u,x,}v}d{b..z} 2>/dev/null').split('\n') -%}
+{% set minions = salt['roles.list_minions']('hadoop-hdfs-namenode') -%}
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+{% if   'hadoop-hdfs-datanode' in salt['config.get']('roles') -%}
+{% set dns = [] -%}
+{% for dev in devs -%}
+{% if  dev -%}
+{% do  dns.append('/data/{{ loop.index }}/dfs/dn') -%}
+{% endif -%}
+{% endfor -%}
+{% if  not dns -%}
+{% do  dns.append('/var/lib/hadoop-hdfs/cache/hdfs/dfs/dn') -%}
+{% endif -%}
+  <property>
+     <name>dfs.datanode.name.dir</name>
+     <value>{{ dns|join(',') }}</value>
+  </property>
+{% elif 'hadoop-hdfs-namenode' in salt['config.get']('roles') -%}
+{% set nns = [] -%}
+{% for dev in devs -%}
+{% if  dev -%}
+{% do  dns.append('/data/{{ loop.index }}/dfs/nn') -%}
+{% endif -%}
+{% endfor -%}
+{% if  not nns -%}
+{% do  nns.append('/var/lib/hadoop-hdfs/cache/hdfs/dfs/nn') -%}
+{% endif -%}
+  <property>
+     <name>dfs.namenode.name.dir</name>
+     <value>{{ nns|join(',') }}</value>
+  </property>
+{% endif -%}
+{% if minions['hadoop-hdfs-namenode'] -%}
+  <property>
+     <name>dfs.namenode.http-address</name>
+     <value>{{ minions['hadoop-hdfs-namenode'][0] }}:50070</value>
+     <description>
+      The address and the base port on which the dfs NameNode Web UI will listen.
+     </description>
+  </property>
+{% endif -%}
+  <property>
+     <name>dfs.permissions.superusergroup</name>
+     <value>hadoop</value>
+  </property>
+</configuration>

@@ -1,0 +1,20 @@
+FastCgiExternalServer /var/www/s3gw.fcgi -socket /var/run/ceph/radosgw.sock
+
+<VirtualHost *:80>
+    ServerName   {{ salt['config.get']('nodename') }}
+    DocumentRoot   /var/www
+
+    <IfModule mod_fastcgi.c>
+        <Directory /var/www>
+            Allow             from all
+            AllowOverride          All
+            AuthBasicAuthoritative Off
+            Options               +ExecCGI
+            Order                  allow,deny
+            SetHandler             fastcgi-script
+        </Directory>
+    </IfModule>
+
+    RewriteEngine On
+    RewriteRule ^/([a-zA-Z0-9-_.]*)([/]?.*) /s3gw.fcgi?page=$1&params=$2&%{QUERY_STRING} [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+</VirtualHost>

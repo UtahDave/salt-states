@@ -1,0 +1,13 @@
+{% set nodename = salt['config.get']('nodename') -%}
+anthracite_url      =  None
+es_host             = 'localhost'
+es_port             =  9200
+filename_metrics    = 'metrics.json'
+graphite_password   =  None
+graphite_url_client = 'http://{{ nodename }}'
+graphite_url_server = 'http://{{ nodename }}'
+graphite_username   =  None
+limit_es_metrics    =  10000
+listen_host         = '0.0.0.0'
+listen_port         =  8080
+log_file            = '/var/log/graph-explorer.log'

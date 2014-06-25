@@ -1,0 +1,32 @@
+server {
+    listen                    80;
+    server_name               _;
+
+    client_max_body_size      64M;
+    keepalive_timeout         5;
+
+    root                      {{ salt['config.get']('/usr/share/graphite-web/static:file:name') }};
+
+    location / {
+        add_header            Access-Control-Allow-Origin  "*";
+        add_header            Access-Control-Allow-Methods "GET, OPTIONS, POST";
+        add_header            Access-Control-Allow-Headers "origin, authorization, accept";
+        proxy_pass_header     Server;
+        proxy_set_header      Host $http_host;
+        proxy_redirect        off;
+        proxy_set_header      X-Real-IP $remote_addr;
+        proxy_set_header      X-Scheme $scheme;
+        proxy_connect_timeout 10;
+        proxy_read_timeout    10;
+        proxy_pass            http://unix:/var/run/gunicorn/graphite-web.sock:/;
+    }
+    location /media/ {
+        root                  {{ salt['config.get']('saltpath') + '/..' }}/django/contrib/admin;
+    }
+    location /nginx_status {
+        stub_status           on;
+        access_log            off;
+        allow                 127.0.0.1;
+        deny                  all;
+    }
+}

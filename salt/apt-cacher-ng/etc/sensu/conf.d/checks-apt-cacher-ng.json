@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-http-apt-cacher-ng": {
+      "command"     : "/etc/sensu/plugins/http/check-http.rb -h 'localhost' -P '3142' -p '/'",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-process-apt-cacher-ng": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p apt-cacher-ng -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

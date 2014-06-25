@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-heat-engine": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p heat-engine -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

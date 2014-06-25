@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "check-process-ceilometer-collector": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p ceilometer-collector -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-ceilometer-collector": {
+      "command"     : "/etc/sensu/plugins/openstack/ceilometer/check_ceilometer-collector.sh",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

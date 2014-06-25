@@ -1,0 +1,849 @@
+{% set host    = salt['config.get']('host') -%}
+{% set minions = salt['roles.list_minions']('graphite-carbon') -%}
+<jmxtrans-agent>
+  <queries>
+
+    <query objectName="java.lang:type=ClassLoading"
+            attribute="LoadedClassCount"
+          resultAlias="java.lang.ClassLoading.LoadedClassCount"/>
+
+    <query objectName="java.lang:type=ClassLoading"
+            attribute="TotalLoadedClassCount"
+          resultAlias="java.lang.ClassLoading.TotalLoadedClassCount"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="committed"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.committed"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="max"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.max"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="HeapMemoryUsage"
+                  key="used"
+          resultAlias="java.lang.Memory.HeapMemoryUsage.used"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="committed"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.committed"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="max"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.max"/>
+
+    <query objectName="java.lang:type=Memory"
+            attribute="NonHeapMemoryUsage"
+                  key="used"
+          resultAlias="java.lang.Memory.NonHeapMemoryUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.CodeCache.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.CodeCache.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.CodeCache.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=Code Cache"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.CodeCache.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Eden Space"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSEdenSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Old Gen"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSOldSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Perm Gen"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSPermSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="PeakUsage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.PeakUsage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="PeakUsage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.PeakUsage.used"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="Usage"
+                  key="committed"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.Usage.committed"/>
+
+    <query objectName="java.lang:type=MemoryPool,name=PS Survivor Space"
+            attribute="Usage"
+                  key="used"
+          resultAlias="java.lang.MemoryPool.PSSurvivorSpace.Usage.used"/>
+
+    <query objectName="java.lang:type=OperatingSystem"
+            attribute="SystemLoadAverage"
+          resultAlias="java.lang.OperatingSystem.SystemLoadAverage"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="CurrentThreadCpuTime"
+          resultAlias="java.lang.Threading.CurrentThreadCpuTime"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="PeakThreadCount"
+          resultAlias="java.lang.Threading.PeakThreadCount"/>
+
+    <query objectName="java.lang:type=Threading"
+            attribute="ThreadCount"
+          resultAlias="java.lang.Threading.ThreadCount"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="BlockCapacity"
+          resultAlias="FSNamesystem.BlockCapacity"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="BlocksTotal"
+          resultAlias="FSNamesystem.BlocksTotal"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="CapacityRemainingGB"
+          resultAlias="FSNamesystem.CapacityRemainingGB"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="CapacityTotalGB"
+          resultAlias="FSNamesystem.CapacityTotalGB"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="CapacityUsedGB"
+          resultAlias="FSNamesystem.CapacityUsedGB"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="CorruptBlocks"
+          resultAlias="FSNamesystem.CorruptBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="ExcessBlocks"
+          resultAlias="FSNamesystem.ExcessBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="ExpiredHeartbeats"
+          resultAlias="FSNamesystem.ExpiredHeartbeats"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="FilesTotal"
+          resultAlias="FSNamesystem.FilesTotal"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="LastCheckpointTime"
+          resultAlias="FSNamesystem.LastCheckpointTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="LastWrittenTransactionId"
+          resultAlias="FSNamesystem.LastWrittenTransactionId"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="MillisSinceLastLoadedEdits"
+          resultAlias="FSNamesystem.MillisSinceLastLoadedEdits"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="MissingBlocks"
+          resultAlias="FSNamesystem.MissingBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="PendingDataNodeMessageCount"
+          resultAlias="FSNamesystem.PendingDataNodeMessageCount"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="PendingDeletionBlocks"
+          resultAlias="FSNamesystem.PendingDeletionBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="PendingReplicationBlocks"
+          resultAlias="FSNamesystem.PendingReplicationBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="PostponedMisreplicatedBlocks"
+          resultAlias="FSNamesystem.PostponedMisreplicatedBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="ScheduledReplicationBlocks"
+          resultAlias="FSNamesystem.ScheduledReplicationBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="TotalFiles"
+          resultAlias="FSNamesystem.TotalFiles"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="TotalLoad"
+          resultAlias="FSNamesystem.TotalLoad"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="TransactionsSinceLastCheckpoint"
+          resultAlias="FSNamesystem.TransactionsSinceLastCheckpoint"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="TransactionsSinceLastLogRoll"
+          resultAlias="FSNamesystem.TransactionsSinceLastLogRoll"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystem"
+            attribute="UnderReplicatedBlocks"
+          resultAlias="FSNamesystem.UnderReplicatedBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="BlocksTotal"
+          resultAlias="FSNamesystemState.BlocksTotal"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="CapacityRemaining"
+          resultAlias="FSNamesystemState.CapacityRemaining"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="CapacityTotal"
+          resultAlias="FSNamesystemState.CapacityTotal"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="CapacityUsed"
+          resultAlias="FSNamesystemState.CapacityUsed"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="FilesTotal"
+          resultAlias="FSNamesystemState.FilesTotal"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="NumDeadDataNodes"
+          resultAlias="FSNamesystemState.NumDeadDataNodes"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="NumLiveDataNodes"
+          resultAlias="FSNamesystemState.NumLiveDataNodes"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="PendingReplicationBlocks"
+          resultAlias="FSNamesystemState.PendingReplicationBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="ScheduledReplicationBlocks"
+          resultAlias="FSNamesystemState.ScheduledReplicationBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="TotalLoad"
+          resultAlias="FSNamesystemState.TotalLoad"/>
+
+    <query objectName="Hadoop:service=NameNode,name=FSNamesystemState"
+            attribute="UnderReplicatedBlocks"
+          resultAlias="FSNamesystemState.UnderReplicatedBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="GcCount"
+          resultAlias="JvmMetrics.GcCount"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="GcCountConcurrentMarkSweep"
+          resultAlias="JvmMetrics.GcCountConcurrentMarkSweep"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="GcCountParNew"
+          resultAlias="JvmMetrics.GcCountParNew"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="GcTimeMillis"
+          resultAlias="JvmMetrics.GcTimeMillis"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="GcTimeMillisConcurrentMarkSweep"
+          resultAlias="JvmMetrics.GcTimeMillisConcurrentMarkSweep"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="GcTimeMillisParNew"
+          resultAlias="JvmMetrics.GcTimeMillisParNew"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="LogError"
+          resultAlias="JvmMetrics.LogError"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="LogFatal"
+          resultAlias="JvmMetrics.LogFatal"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="LogInfo"
+          resultAlias="JvmMetrics.LogInfo"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="LogWarn"
+          resultAlias="JvmMetrics.LogWarn"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="MemHeapCommittedM"
+          resultAlias="JvmMetrics.MemHeapCommittedM"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="MemHeapUsedM"
+          resultAlias="JvmMetrics.MemHeapUsedM"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="MemNonHeapCommittedM"
+          resultAlias="JvmMetrics.MemNonHeapCommittedM"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="MemNonHeapUsedM"
+          resultAlias="JvmMetrics.MemNonHeapUsedM"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="ThreadsBlocked"
+          resultAlias="JvmMetrics.ThreadsBlocked"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="ThreadsNew"
+          resultAlias="JvmMetrics.ThreadsNew"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="ThreadsRunnable"
+          resultAlias="JvmMetrics.ThreadsRunnable"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="ThreadsTerminated"
+          resultAlias="JvmMetrics.ThreadsTerminated"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="ThreadsTimedWaiting"
+          resultAlias="JvmMetrics.ThreadsTimedWaiting"/>
+
+    <query objectName="Hadoop:service=NameNode,name=JvmMetrics"
+            attribute="ThreadsWaiting"
+          resultAlias="JvmMetrics.ThreadsWaiting"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="DroppedPubAll"
+          resultAlias="MetricsSystem.Stats.DroppedPubAll"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="NumActiveSinks"
+          resultAlias="MetricsSystem.Stats.NumActiveSinks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="NumActiveSources"
+          resultAlias="MetricsSystem.Stats.NumActiveSources"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="NumAllSinks"
+          resultAlias="MetricsSystem.Stats.NumAllSinks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="NumAllSources"
+          resultAlias="MetricsSystem.Stats.NumAllSources"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="PublishAvgTime"
+          resultAlias="MetricsSystem.Stats.PublishAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="PublishNumOps"
+          resultAlias="MetricsSystem.Stats.PublishNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="SnapshotAvgTime"
+          resultAlias="MetricsSystem.Stats.SnapshotAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=MetricsSystem,sub=Stats"
+            attribute="SnapshotNumOps"
+          resultAlias="MetricsSystem.Stats.SnapshotNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="AddBlockOps"
+          resultAlias="NameNodeActivity.AddBlockOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="BlockReportAvgTime"
+          resultAlias="NameNodeActivity.BlockReportAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="BlockReportNumOps"
+          resultAlias="NameNodeActivity.BlockReportNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="CreateFileOps"
+          resultAlias="NameNodeActivity.CreateFileOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="CreateSymlinkOps"
+          resultAlias="NameNodeActivity.CreateSymlinkOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="DeleteFileOps"
+          resultAlias="NameNodeActivity.DeleteFileOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="FileInfoOps"
+          resultAlias="NameNodeActivity.FileInfoOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="FilesAppended"
+          resultAlias="NameNodeActivity.FilesAppended"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="FilesCreated"
+          resultAlias="NameNodeActivity.FilesCreated"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="FilesDeleted"
+          resultAlias="NameNodeActivity.FilesDeleted"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="FilesInGetListingOps"
+          resultAlias="NameNodeActivity.FilesInGetListingOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="FilesRenamed"
+          resultAlias="NameNodeActivity.FilesRenamed"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="FsImageLoadTime"
+          resultAlias="NameNodeActivity.FsImageLoadTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="GetAdditionalDatanodeOps"
+          resultAlias="NameNodeActivity.GetAdditionalDatanodeOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="GetBlockLocations"
+          resultAlias="NameNodeActivity.GetBlockLocations"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="GetLinkTargetOps"
+          resultAlias="NameNodeActivity.GetLinkTargetOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="GetListingOps"
+          resultAlias="NameNodeActivity.GetListingOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="SafemodeTime"
+          resultAlias="NameNodeActivity.SafemodeTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="SyncsAvgTime"
+          resultAlias="NameNodeActivity.SyncsAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="SyncsNumOps"
+          resultAlias="NameNodeActivity.SyncsNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="TransactionsAvgTime"
+          resultAlias="NameNodeActivity.TransactionsAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="TransactionsBatchedInSync"
+          resultAlias="NameNodeActivity.TransactionsBatchedInSync"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeActivity"
+            attribute="TransactionsNumOps"
+          resultAlias="NameNodeActivity.TransactionsNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="BlockPoolUsedSpace"
+          resultAlias="NameNodeInfo.BlockPoolUsedSpace"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="Free"
+          resultAlias="NameNodeInfo.Free"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="NonDfsUsedSpace"
+          resultAlias="NameNodeInfo.NonDfsUsedSpace"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="NumberOfMissingBlocks"
+          resultAlias="NameNodeInfo.NumberOfMissingBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="PercentBlockPoolUsed"
+          resultAlias="NameNodeInfo.PercentBlockPoolUsed"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="PercentRemaining"
+          resultAlias="NameNodeInfo.PercentRemaining"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="PercentUsed"
+          resultAlias="NameNodeInfo.PercentUsed"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="Threads"
+          resultAlias="NameNodeInfo.Threads"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="Total"
+          resultAlias="NameNodeInfo.Total"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="TotalBlocks"
+          resultAlias="NameNodeInfo.TotalBlocks"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="TotalFiles"
+          resultAlias="NameNodeInfo.TotalFiles"/>
+
+    <query objectName="Hadoop:service=NameNode,name=NameNodeInfo"
+            attribute="Used"
+          resultAlias="NameNodeInfo.Used"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="CallQueueLength"
+          resultAlias="RpcActivityForPort8020.CallQueueLength"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="NumOpenConnections"
+          resultAlias="RpcActivityForPort8020.NumOpenConnections"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="ReceivedBytes"
+          resultAlias="RpcActivityForPort8020.ReceivedBytes"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcAuthenticationFailures"
+          resultAlias="RpcActivityForPort8020.RpcAuthenticationFailures"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcAuthenticationSuccesses"
+          resultAlias="RpcActivityForPort8020.RpcAuthenticationSuccesses"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcAuthorizationFailures"
+          resultAlias="RpcActivityForPort8020.RpcAuthorizationFailures"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcAuthorizationSuccesses"
+          resultAlias="RpcActivityForPort8020.RpcAuthorizationSuccesses"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcProcessingTimeAvgTime"
+          resultAlias="RpcActivityForPort8020.RpcProcessingTimeAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcProcessingTimeNumOps"
+          resultAlias="RpcActivityForPort8020.RpcProcessingTimeNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcQueueTimeAvgTime"
+          resultAlias="RpcActivityForPort8020.RpcQueueTimeAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="RpcQueueTimeNumOps"
+          resultAlias="RpcActivityForPort8020.RpcQueueTimeNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8020"
+            attribute="SentBytes"
+          resultAlias="RpcActivityForPort8020.SentBytes"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="CallQueueLength"
+          resultAlias="RpcActivityForPort8022.CallQueueLength"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="NumOpenConnections"
+          resultAlias="RpcActivityForPort8022.NumOpenConnections"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="ReceivedBytes"
+          resultAlias="RpcActivityForPort8022.ReceivedBytes"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcAuthenticationFailures"
+          resultAlias="RpcActivityForPort8022.RpcAuthenticationFailures"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcAuthenticationSuccesses"
+          resultAlias="RpcActivityForPort8022.RpcAuthenticationSuccesses"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcAuthorizationFailures"
+          resultAlias="RpcActivityForPort8022.RpcAuthorizationFailures"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcAuthorizationSuccesses"
+          resultAlias="RpcActivityForPort8022.RpcAuthorizationSuccesses"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcProcessingTimeAvgTime"
+          resultAlias="RpcActivityForPort8022.RpcProcessingTimeAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcProcessingTimeNumOps"
+          resultAlias="RpcActivityForPort8022.RpcProcessingTimeNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcQueueTimeAvgTime"
+          resultAlias="RpcActivityForPort8022.RpcQueueTimeAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="RpcQueueTimeNumOps"
+          resultAlias="RpcActivityForPort8022.RpcQueueTimeNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcActivityForPort8022"
+            attribute="SentBytes"
+          resultAlias="RpcActivityForPort8022.SentBytes"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="BlockReceivedAndDeletedAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.BlockReceivedAndDeletedAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="BlockReceivedAndDeletedNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.BlockReceivedAndDeletedNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="BlockReportAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.BlockReportAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="BlockReportNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.BlockReportNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="GetMostRecentCheckpointTxIdAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.GetMostRecentCheckpointTxIdAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="GetMostRecentCheckpointTxIdNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.GetMostRecentCheckpointTxIdNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="GetServiceStatusAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.GetServiceStatusAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="GetServiceStatusNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.GetServiceStatusNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="GetTransactionIdAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.GetTransactionIdAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="GetTransactionIdNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.GetTransactionIdNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="MonitorHealthAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.MonitorHealthAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="MonitorHealthNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.MonitorHealthNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="RegisterDatanodeAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.RegisterDatanodeAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="RegisterDatanodeNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.RegisterDatanodeNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="RollEditLogAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.RollEditLogAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="RollEditLogNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.RollEditLogNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="SendHeartbeatAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.SendHeartbeatAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="SendHeartbeatNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.SendHeartbeatNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="TransitionToActiveAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.TransitionToActiveAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="TransitionToActiveNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.TransitionToActiveNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="VersionRequestAvgTime"
+          resultAlias="RpcDetailedActivityForPort8020.VersionRequestAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8020"
+            attribute="VersionRequestNumOps"
+          resultAlias="RpcDetailedActivityForPort8020.VersionRequestNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="BlockReceivedAndDeletedAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.BlockReceivedAndDeletedAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="BlockReceivedAndDeletedNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.BlockReceivedAndDeletedNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="BlockReportAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.BlockReportAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="BlockReportNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.BlockReportNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="GetMostRecentCheckpointTxIdAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.GetMostRecentCheckpointTxIdAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="GetMostRecentCheckpointTxIdNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.GetMostRecentCheckpointTxIdNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="GetServiceStatusAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.GetServiceStatusAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="GetServiceStatusNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.GetServiceStatusNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="GetTransactionIdAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.GetTransactionIdAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="GetTransactionIdNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.GetTransactionIdNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="MonitorHealthAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.MonitorHealthAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="MonitorHealthNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.MonitorHealthNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="RegisterDatanodeAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.RegisterDatanodeAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="RegisterDatanodeNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.RegisterDatanodeNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="RollEditLogAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.RollEditLogAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="RollEditLogNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.RollEditLogNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="SendHeartbeatAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.SendHeartbeatAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="SendHeartbeatNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.SendHeartbeatNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="TransitionToActiveAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.TransitionToActiveAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="TransitionToActiveNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.TransitionToActiveNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="VersionRequestAvgTime"
+          resultAlias="RpcDetailedActivityForPort8022.VersionRequestAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=RpcDetailedActivityForPort8022"
+            attribute="VersionRequestNumOps"
+          resultAlias="RpcDetailedActivityForPort8022.VersionRequestNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=UgiMetrics"
+            attribute="LoginFailureAvgTime"
+          resultAlias="UgiMetrics.LoginFailureAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=UgiMetrics"
+            attribute="LoginFailureNumOps"
+          resultAlias="UgiMetrics.LoginFailureNumOps"/>
+
+    <query objectName="Hadoop:service=NameNode,name=UgiMetrics"
+            attribute="LoginSuccessAvgTime"
+          resultAlias="UgiMetrics.LoginSuccessAvgTime"/>
+
+    <query objectName="Hadoop:service=NameNode,name=UgiMetrics"
+            attribute="LoginSuccessNumOps"
+          resultAlias="UgiMetrics.LoginSuccessNumOps"/>
+
+  </queries>
+{% for minion in minions['graphite-carbon'] -%}
+  <outputWriter class="org.jmxtrans.agent.GraphitePlainTextTcpOutputWriter">
+    <host>{{ minion }}</host>
+    <port>2003</port>
+    <namePrefix>{{ host }}.hadoop-hdfs-namenode.</namePrefix>
+  </outputWriter>
+{% endfor -%}
+  <collectIntervalInSeconds>20</collectIntervalInSeconds>
+</jmxtrans-agent>

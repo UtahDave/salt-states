@@ -1,0 +1,18 @@
+{% set host = salt['config.get']('host') -%}
+{
+  "checks": {
+    "check-process-apache2": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p {{ salt['config.get']('apache2:service:name') }} -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-apache2": {
+      "command"     : "/etc/sensu/plugins/apache/apache-graphite.rb --scheme {{ host }}.apache2",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

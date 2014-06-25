@@ -1,0 +1,37 @@
+{
+  "checks": {
+    "check-process-memcached": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p memcached -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "check-memcached-stats": {
+      "command"     : "/etc/sensu/plugins/memcached/check-memcached-stats.rb",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    },
+    "metric-memcached": {
+      "command"     : "/etc/sensu/plugins/memcached/memcached-graphite.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-memcached-kpis": {
+      "command"     : "/etc/sensu/plugins/memcached/memcached-key-stats-graphite.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    },
+    "metric-memcached-sockets": {
+      "command"     : "/etc/sensu/plugins/memcached/memcached_socket_graphite.rb",
+      "handlers"    : ["graphite"],
+      "interval"    :   10,
+      "standalone"  :   true,
+      "type"        :  "metric"
+    }
+  }
+}

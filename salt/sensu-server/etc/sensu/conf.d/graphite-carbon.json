@@ -1,0 +1,15 @@
+{% set minions = salt['roles.list_minions']('graphite-carbon') -%}
+{% if  minions['graphite-carbon'] -%}
+{
+  "handlers"       : {
+    "graphite"     : {
+      "mutator"    :  "only_check_output",
+      "socket"     : {
+        "host"     :  "{{ minions['graphite-carbon'][0] }}",
+        "port"     :   2003
+      },
+      "type"       :  "tcp"
+    }
+  }
+}
+{% endif -%}

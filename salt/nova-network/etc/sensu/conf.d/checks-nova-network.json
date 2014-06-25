@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "check-process-nova-network": {
+      "command"     : "/etc/sensu/plugins/processes/check-procs.rb -p nova-network -C 1",
+      "handlers"    : ["default"],
+      "interval"    :   60,
+      "standalone"  :   true
+    }
+  }
+}

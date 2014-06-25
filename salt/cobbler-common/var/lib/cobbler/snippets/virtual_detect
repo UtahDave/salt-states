@@ -1,0 +1,17 @@
+#set $mac = $getVar('$mac_address_eth0')
+#if  $mac
+#set        $mac_prefix  = $mac[0:8]
+#if         $mac_prefix == '00:01:a4'
+#set global $machinetype = 'kvm'
+#else if    $mac_prefix == '00:1a:4a'
+#set global $machinetype = 'kvm'
+#else if    $mac_prefix == '52:54:00'
+#set global $machinetype = 'kvm'
+#else if    $mac_prefix == '00:16:3e'
+#set global $machinetype = 'xen'
+#else if    $mac_prefix == '00:50:56'
+#set global $machinetype = 'esx'
+#else
+#set global $machinetype = 'physical'
+#end if
+#end if

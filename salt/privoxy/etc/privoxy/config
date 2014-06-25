@@ -1,0 +1,25 @@
+{% set minions = salt['roles.list_minions']('socks5') -%}
+accept-intercepted-requests 0
+actionsfile                 default.action
+actionsfile                 match-all.action
+actionsfile                 user.action
+allow-cgi-request-crunching 0
+buffer-limit                4096
+confdir                     /etc/privoxy
+enable-edit-actions         0
+enable-remote-http-toggle   0
+enable-remote-toggle        0
+enforce-blocks              0
+filterfile                  default.filter
+filterfile                  user.filter
+forwarded-connect-retries   0
+forward-socks4              / {{ minions['socks5'][0] }}:1080 .
+forward-socks5              / {{ minions['socks5'][0] }}:1080 .
+keep-alive-timeout          5
+listen-address              localhost:8118
+logdir                      /var/log/privoxy
+logfile                     logfile
+socket-timeout              300
+split-large-forms           0
+toggle                      1
+user-manual                 /usr/share/doc/privoxy/user-manual
